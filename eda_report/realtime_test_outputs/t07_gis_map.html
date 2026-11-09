@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPICS DSN3099: GIS Road Condition & Connectivity Gap Mapper</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+        }
+        #header {
+            background: #1e293b;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #334155;
+        }
+        h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .stats-bar {
+            display: flex;
+            gap: 16px;
+        }
+        .stat-card {
+            background: #0f172a;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            font-size: 13px;
+        }
+        .stat-val {
+            font-size: 18px;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+        #container {
+            display: flex;
+            height: calc(100vh - 75px);
+        }
+        #map {
+            flex: 1;
+            height: 100%;
+        }
+        #sidebar {
+            width: 380px;
+            background: #1e293b;
+            border-left: 2px solid #334155;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .hazard-item {
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-left: 5px solid #64748b;
+        }
+        .hazard-item.tier1 { border-left-color: #10b981; }
+        .hazard-item.tier2 { border-left-color: #f59e0b; }
+        .hazard-item.tier3 { border-left-color: #ef4444; }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge.red { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .badge.yellow { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .badge.green { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+    </style>
+</head>
+<body>
+
+<div id="header">
+    <div>
+        <h1>EPICS DSN3099: GIS Road Condition & Safety Mapper</h1>
+        <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">
+            Autonomous Infrastructure Intelligence from Windshield RGB Dashcams & Smartphone Telemetry
+        </div>
+    </div>
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div>Surveyed Corridor</div>
+            <div class="stat-val">4.5 km</div>
+        </div>
+        <div class="stat-card">
+            <div>Road Quality Score</div>
+            <div class="stat-val" style="color: #10b981;">88/100</div>
+        </div>
+        <div class="stat-card">
+            <div>Hazards Logged</div>
+            <div class="stat-val">3</div>
+        </div>
+        <div class="stat-card">
+            <div>Priority Level</div>
+            <div style="font-size: 11px; font-weight: bold; color: #10b981;">GOOD OPERATIONAL CONDITION</div>
+        </div>
+    </div>
+</div>
+
+<div id="container">
+    <div id="map"></div>
+    <div id="sidebar">
+        <h3 style="margin-top: 0; font-size: 16px; border-bottom: 1px solid #334155; padding-bottom: 8px;">
+            Identified Road Hazards
+        </h3>
+        <div id="hazard-list"></div>
+    </div>
+</div>
+
+<script>
+    const map = L.map('map').setView([12.982391530977713, 79.16816352959901], 13);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 19
+    }).addTo(map);
+
+    const trajectory = [[12.9716, 79.1585], [12.97230136222799, 79.15912800548975], [12.97299725488361, 79.15971793920433], [12.973852976056776, 79.16051469085214], [12.974368834280135, 79.16106552280219], [12.975157866139511, 79.16205018981746], [12.975997042427695, 79.16313711932598], [12.976571227503728, 79.16378729717624], [12.977060622134656, 79.16438614690942], [12.977863937515496, 79.16490202134955], [12.978560091641278, 79.16527490706356], [12.979576038565915, 79.16594852005383], [12.980174888220178, 79.16697473216117], [12.98098930268613, 79.16767726007703], [12.981736729905514, 79.16831261868701], [12.982478801328956, 79.16897063109755], [12.983356073731828, 79.16931837405853], [12.984265017617252, 79.17012194015216], [12.985155033245833, 79.17081036200176], [12.985599070971393, 79.17138985040674], [12.986319983358928, 79.17184193832716], [12.987176587177869, 79.17236301960297], [12.988235223642558, 79.17268470441621], [12.989294600195382, 79.173266437112], [12.9900228685187, 79.17384504096876], [12.990493828555744, 79.17453834042459], [12.991464765621915, 79.1753212993018], [12.992122083052262, 79.1759946628674], [12.99310541749478, 79.17639010239328], [12.993848400629357, 79.17667221386981]];
+    const polyline = L.polyline(trajectory, {
+        color: '#38bdf8',
+        weight: 5,
+        opacity: 0.8
+    }).addTo(map);
+
+    const hazards = [{"hazard_id": 1, "latitude": 12.971638, "longitude": 79.158551, "depth_max_cm": 4.5, "width_cm": 45.0, "volume_cm3": 1800.0, "severity_tier": 2, "confidence_score": 0.78, "validation_status": "PHYSICALLY_VALIDATED", "rqs_penalty": 22.9}, {"hazard_id": 2, "latitude": 12.977844, "longitude": 79.164875, "depth_max_cm": 7.2, "width_cm": 60.0, "volume_cm3": 3200.0, "severity_tier": 3, "confidence_score": 0.65, "validation_status": "PHYSICALLY_VALIDATED", "rqs_penalty": 38.0}, {"hazard_id": 3, "latitude": 12.98555, "longitude": 79.171454, "depth_max_cm": 2.1, "width_cm": 30.0, "volume_cm3": 500.0, "severity_tier": 1, "confidence_score": 0.9, "validation_status": "PHYSICALLY_VALIDATED", "rqs_penalty": 9.4}];
+    const listContainer = document.getElementById('hazard-list');
+
+    hazards.forEach(h => {
+        let markerColor = '#10b981';
+        let tierClass = 'tier1';
+        let badgeClass = 'green';
+        if (h.severity_tier === 2) {
+            markerColor = '#f59e0b';
+            tierClass = 'tier2';
+            badgeClass = 'yellow';
+        } else if (h.severity_tier === 3) {
+            markerColor = '#ef4444';
+            tierClass = 'tier3';
+            badgeClass = 'red';
+        }
+
+        const circle = L.circleMarker([h.latitude, h.longitude], {
+            radius: Math.max(6, Math.min(14, h.depth_max_cm * 1.5)),
+            fillColor: markerColor,
+            color: '#ffffff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.85
+        }).addTo(map);
+
+        circle.bindPopup(`
+            <div style="color: #0f172a; font-family: sans-serif;">
+                <h4 style="margin: 0 0 6px 0;">Pothole Hazard #${h.hazard_id}</h4>
+                <div><strong>Severity:</strong> Tier ${h.severity_tier}</div>
+                <div><strong>Max Depth:</strong> ${h.depth_max_cm} cm</div>
+                <div><strong>Width:</strong> ${h.width_cm} cm</div>
+                <div><strong>Displacement Vol:</strong> ${h.volume_cm3} cm³</div>
+                <div><strong>Dynamic Confidence:</strong> ${(h.confidence_score * 100).toFixed(0)}%</div>
+                <div><strong>Status:</strong> ${h.validation_status}</div>
+            </div>
+        `);
+
+        // Sidebar card
+        const card = document.createElement('div');
+        card.className = `hazard-item ${tierClass}`;
+        card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-weight: bold; font-size: 14px;">Hazard #${h.hazard_id}</span>
+                <span class="badge ${badgeClass}">Tier ${h.severity_tier}</span>
+            </div>
+            <div style="font-size: 12px; color: #94a3b8; line-height: 1.5;">
+                <div>Depth: <strong>${h.depth_max_cm} cm</strong> | Width: <strong>${h.width_cm} cm</strong></div>
+                <div>Volume: <strong>${h.volume_cm3} cm³</strong></div>
+                <div>GPS: ${h.latitude.toFixed(5)}, ${h.longitude.toFixed(5)}</div>
+                <div>Status: <span style="color: #38bdf8;">${h.validation_status}</span> (${(h.confidence_score*100).toFixed(0)}% conf)</div>
+            </div>
+        `;
+        card.onclick = () => {
+            map.setView([h.latitude, h.longitude], 16);
+            circle.openPopup();
+        };
+        listContainer.appendChild(card);
+    });
+</script>
+
+</body>
+</html>

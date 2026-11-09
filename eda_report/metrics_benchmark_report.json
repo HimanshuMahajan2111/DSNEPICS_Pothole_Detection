@@ -1,0 +1,48 @@
+{
+    "timestamp": "2026-11-09 15:08:39",
+    "hardware_profile": "Standard Monocular RGB Dashcam (1080p) + Windshield Smartphone IMU",
+    "geometric_reconstruction": {
+        "distance_z_mae_m": 0.1301,
+        "width_mae_cm": 3.27,
+        "length_mae_cm": 2.27,
+        "depth_mae_cm": 0.16,
+        "depth_rmse_cm": 0.21,
+        "volume_mape_percent": 7.33
+    },
+    "dynamic_simulation": {
+        "dynamic_peak_shock_mae_g": 0.0691,
+        "peak_shock_correlation_r": 0.9955,
+        "damping_ratio_zeta_mae": 0.2344,
+        "model_resonant_frequency_hz": 2.5,
+        "empirical_dominant_freq_hz": 2.5
+    },
+    "severity_classification": {
+        "severity_accuracy": 1.0,
+        "severity_weighted_precision": 1.0,
+        "severity_weighted_recall": 1.0,
+        "severity_weighted_f1": 1.0,
+        "confusion_matrix": [
+            [
+                1584,
+                0,
+                0
+            ],
+            [
+                0,
+                1233,
+                0
+            ],
+            [
+                0,
+                0,
+                21
+            ]
+        ]
+    },
+    "runtime_latency": {
+        "3d_ransac_reconstruction_ms": 90.1,
+        "quarter_car_ode_solver_ms": 29.52,
+        "full_inference_per_pothole_ms": 120.03,
+        "effective_pipeline_fps": 8.3
+    }
+}

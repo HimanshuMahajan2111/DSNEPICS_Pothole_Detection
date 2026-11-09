@@ -1,0 +1,118 @@
+{
+    "Random Forest": {
+        "test_accuracy": 0.9636,
+        "test_precision": 0.9638,
+        "test_recall": 0.9636,
+        "test_f1": 0.9625,
+        "cv_mean_accuracy": 0.9627,
+        "cv_std": 0.003,
+        "confusion_matrix": [
+            [
+                463,
+                13,
+                0
+            ],
+            [
+                14,
+                356,
+                0
+            ],
+            [
+                0,
+                4,
+                2
+            ]
+        ],
+        "classification_report": {
+            "Tier 1 (Minor)": {
+                "precision": 0.9706498951781971,
+                "recall": 0.9726890756302521,
+                "f1-score": 0.9716684155299056,
+                "support": 476.0
+            },
+            "Tier 2 (Mod)": {
+                "precision": 0.9544235924932976,
+                "recall": 0.9621621621621622,
+                "f1-score": 0.9582772543741588,
+                "support": 370.0
+            },
+            "Tier 3 (Crit)": {
+                "precision": 1.0,
+                "recall": 0.3333333333333333,
+                "f1-score": 0.5,
+                "support": 6.0
+            },
+            "accuracy": 0.9636150234741784,
+            "macro avg": {
+                "precision": 0.9750244958904982,
+                "recall": 0.7560615237085826,
+                "f1-score": 0.8099818899680215,
+                "support": 852.0
+            },
+            "weighted avg": {
+                "precision": 0.9638099522621385,
+                "recall": 0.9636150234741784,
+                "f1-score": 0.9625313966087721,
+                "support": 852.0
+            }
+        }
+    },
+    "Gradient Boosting": {
+        "test_accuracy": 0.9636,
+        "test_precision": 0.9626,
+        "test_recall": 0.9636,
+        "test_f1": 0.9627,
+        "cv_mean_accuracy": 0.9587,
+        "cv_std": 0.0054,
+        "confusion_matrix": [
+            [
+                464,
+                12,
+                0
+            ],
+            [
+                14,
+                355,
+                1
+            ],
+            [
+                0,
+                4,
+                2
+            ]
+        ],
+        "classification_report": {
+            "Tier 1 (Minor)": {
+                "precision": 0.9707112970711297,
+                "recall": 0.9747899159663865,
+                "f1-score": 0.9727463312368972,
+                "support": 476.0
+            },
+            "Tier 2 (Mod)": {
+                "precision": 0.9568733153638814,
+                "recall": 0.9594594594594594,
+                "f1-score": 0.9581646423751687,
+                "support": 370.0
+            },
+            "Tier 3 (Crit)": {
+                "precision": 0.6666666666666666,
+                "recall": 0.3333333333333333,
+                "f1-score": 0.4444444444444444,
+                "support": 6.0
+            },
+            "accuracy": 0.9636150234741784,
+            "macro avg": {
+                "precision": 0.8647504263672259,
+                "recall": 0.7558609029197264,
+                "f1-score": 0.7917851393521701,
+                "support": 852.0
+            },
+            "weighted avg": {
+                "precision": 0.9625606855522228,
+                "recall": 0.9636150234741784,
+                "f1-score": 0.9626934718477022,
+                "support": 852.0
+            }
+        }
+    }
+}

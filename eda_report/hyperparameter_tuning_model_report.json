@@ -1,0 +1,266 @@
+{
+  "Random Forest": {
+    "test_accuracy": 0.966,
+    "test_weighted_precision": 0.9656,
+    "test_weighted_recall": 0.966,
+    "test_weighted_f1": 0.9656,
+    "test_macro_precision": 0.8938,
+    "test_macro_recall": 0.8127,
+    "test_macro_f1": 0.8449,
+    "cv_5fold_mean_acc": 0.9587,
+    "cv_5fold_std": 0.0052,
+    "inference_latency_per_sample_ms": 0.047,
+    "optimal_hyperparameters": {
+      "class_weight": "balanced",
+      "max_depth": 5,
+      "min_samples_split": 5,
+      "n_estimators": 200
+    },
+    "confusion_matrix": [
+      [
+        462,
+        14,
+        0
+      ],
+      [
+        11,
+        358,
+        1
+      ],
+      [
+        0,
+        3,
+        3
+      ]
+    ],
+    "tier_breakdown": {
+      "Tier 1 (Minor)": {
+        "precision": 0.9767,
+        "recall": 0.9706,
+        "f1_score": 0.9737,
+        "support": 476
+      },
+      "Tier 2 (Mod)": {
+        "precision": 0.9547,
+        "recall": 0.9676,
+        "f1_score": 0.9611,
+        "support": 370
+      },
+      "Tier 3 (Crit)": {
+        "precision": 0.75,
+        "recall": 0.5,
+        "f1_score": 0.6,
+        "support": 6
+      }
+    },
+    "feature_importances": {
+      "dist_z_m": 0.0024,
+      "phys_width_m": 0.3159,
+      "phys_length_m": 0.0172,
+      "slenderness": 0.0844,
+      "area_cm2": 0.0328,
+      "est_depth_cm": 0.1676,
+      "volume_cm3": 0.0774,
+      "edge_slope_deg": 0.0163,
+      "impact_risk_index": 0.286
+    }
+  },
+  "Gradient Boosting": {
+    "test_accuracy": 0.9636,
+    "test_weighted_precision": 0.9627,
+    "test_weighted_recall": 0.9636,
+    "test_weighted_f1": 0.9627,
+    "test_macro_precision": 0.8645,
+    "test_macro_recall": 0.7563,
+    "test_macro_f1": 0.7918,
+    "cv_5fold_mean_acc": 0.9653,
+    "cv_5fold_std": 0.004,
+    "inference_latency_per_sample_ms": 0.018,
+    "optimal_hyperparameters": {
+      "learning_rate": 0.1,
+      "max_depth": 5,
+      "n_estimators": 150,
+      "subsample": 1.0
+    },
+    "confusion_matrix": [
+      [
+        462,
+        14,
+        0
+      ],
+      [
+        12,
+        357,
+        1
+      ],
+      [
+        0,
+        4,
+        2
+      ]
+    ],
+    "tier_breakdown": {
+      "Tier 1 (Minor)": {
+        "precision": 0.9747,
+        "recall": 0.9706,
+        "f1_score": 0.9726,
+        "support": 476
+      },
+      "Tier 2 (Mod)": {
+        "precision": 0.952,
+        "recall": 0.9649,
+        "f1_score": 0.9584,
+        "support": 370
+      },
+      "Tier 3 (Crit)": {
+        "precision": 0.6667,
+        "recall": 0.3333,
+        "f1_score": 0.4444,
+        "support": 6
+      }
+    },
+    "feature_importances": {
+      "dist_z_m": 0.011,
+      "phys_width_m": 0.8209,
+      "phys_length_m": 0.0087,
+      "slenderness": 0.0292,
+      "area_cm2": 0.0059,
+      "est_depth_cm": 0.0101,
+      "volume_cm3": 0.0096,
+      "edge_slope_deg": 0.0045,
+      "impact_risk_index": 0.1001
+    }
+  },
+  "XGBoost": {
+    "test_accuracy": 0.9695,
+    "test_weighted_precision": 0.9698,
+    "test_weighted_recall": 0.9695,
+    "test_weighted_f1": 0.9684,
+    "test_macro_precision": 0.9787,
+    "test_macro_recall": 0.7606,
+    "test_macro_f1": 0.814,
+    "cv_5fold_mean_acc": 0.9632,
+    "cv_5fold_std": 0.0079,
+    "inference_latency_per_sample_ms": 0.004,
+    "optimal_hyperparameters": {
+      "learning_rate": 0.1,
+      "max_depth": 3,
+      "n_estimators": 150,
+      "subsample": 0.8
+    },
+    "confusion_matrix": [
+      [
+        463,
+        13,
+        0
+      ],
+      [
+        9,
+        361,
+        0
+      ],
+      [
+        0,
+        4,
+        2
+      ]
+    ],
+    "tier_breakdown": {
+      "Tier 1 (Minor)": {
+        "precision": 0.9809,
+        "recall": 0.9727,
+        "f1_score": 0.9768,
+        "support": 476
+      },
+      "Tier 2 (Mod)": {
+        "precision": 0.955,
+        "recall": 0.9757,
+        "f1_score": 0.9652,
+        "support": 370
+      },
+      "Tier 3 (Crit)": {
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1_score": 0.5,
+        "support": 6
+      }
+    },
+    "feature_importances": {
+      "dist_z_m": 0.0214,
+      "phys_width_m": 0.5723,
+      "phys_length_m": 0.0293,
+      "slenderness": 0.0346,
+      "area_cm2": 0.0229,
+      "est_depth_cm": 0.1316,
+      "volume_cm3": 0.0346,
+      "edge_slope_deg": 0.0249,
+      "impact_risk_index": 0.1284
+    }
+  },
+  "LightGBM": {
+    "test_accuracy": 0.9695,
+    "test_weighted_precision": 0.9697,
+    "test_weighted_recall": 0.9695,
+    "test_weighted_f1": 0.9684,
+    "test_macro_precision": 0.9789,
+    "test_macro_recall": 0.7602,
+    "test_macro_f1": 0.814,
+    "cv_5fold_mean_acc": 0.9647,
+    "cv_5fold_std": 0.0051,
+    "inference_latency_per_sample_ms": 0.014,
+    "optimal_hyperparameters": {
+      "class_weight": "balanced",
+      "learning_rate": 0.1,
+      "max_depth": 4,
+      "n_estimators": 150
+    },
+    "confusion_matrix": [
+      [
+        465,
+        11,
+        0
+      ],
+      [
+        11,
+        359,
+        0
+      ],
+      [
+        0,
+        4,
+        2
+      ]
+    ],
+    "tier_breakdown": {
+      "Tier 1 (Minor)": {
+        "precision": 0.9769,
+        "recall": 0.9769,
+        "f1_score": 0.9769,
+        "support": 476
+      },
+      "Tier 2 (Mod)": {
+        "precision": 0.9599,
+        "recall": 0.9703,
+        "f1_score": 0.9651,
+        "support": 370
+      },
+      "Tier 3 (Crit)": {
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1_score": 0.5,
+        "support": 6
+      }
+    },
+    "feature_importances": {
+      "dist_z_m": 393.0,
+      "phys_width_m": 988.0,
+      "phys_length_m": 265.0,
+      "slenderness": 746.0,
+      "area_cm2": 269.0,
+      "est_depth_cm": 360.0,
+      "volume_cm3": 185.0,
+      "edge_slope_deg": 284.0,
+      "impact_risk_index": 788.0
+    }
+  }
+}

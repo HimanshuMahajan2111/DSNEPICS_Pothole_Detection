@@ -1,0 +1,22 @@
+{
+    "selected_sensor_features": [
+        "accel_peak",
+        "accel_p2p",
+        "accel_rms",
+        "variance",
+        "fft_energy_3_12hz",
+        "kinetic_shock_energy_joules",
+        "speed_norm_p2p_g",
+        "speed_norm_peak_g"
+    ],
+    "selected_vision_features": [
+        "est_depth_cm",
+        "volume_cm3",
+        "phys_width_m",
+        "impact_risk_index",
+        "edge_slope_deg"
+    ],
+    "sensor_vif_threshold": 10.0,
+    "top_kinematic_bridge": "speed_norm_peak_g",
+    "top_geometric_bridge": "impact_risk_index"
+}

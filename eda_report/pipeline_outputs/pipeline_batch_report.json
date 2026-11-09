@@ -1,0 +1,377 @@
+[
+    {
+        "image": "India_000105.jpg",
+        "simulated_speed_kmh": 30.0,
+        "potholes_found": 3,
+        "detections": [
+            {
+                "pothole_id": 1,
+                "geometry": {
+                    "distance_z_m": 4.9,
+                    "width_cm": 41.0,
+                    "length_cm": 20.0,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 4277.3,
+                    "edge_slope_deg": 63.4
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 30.0,
+                    "simulated_peak_g": 1.3192,
+                    "speed_norm_shock": 0.1583,
+                    "confidence_score": 0.6087,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            },
+            {
+                "pothole_id": 2,
+                "geometry": {
+                    "distance_z_m": 4.55,
+                    "width_cm": 31.8,
+                    "length_cm": 21.2,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 9263.0,
+                    "edge_slope_deg": 62.1
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 30.0,
+                    "simulated_peak_g": 1.3606,
+                    "speed_norm_shock": 0.1633,
+                    "confidence_score": 0.5539,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            },
+            {
+                "pothole_id": 3,
+                "geometry": {
+                    "distance_z_m": 4.48,
+                    "width_cm": 31.4,
+                    "length_cm": 20.9,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 2156.1,
+                    "edge_slope_deg": 62.4
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 30.0,
+                    "simulated_peak_g": 1.3512,
+                    "speed_norm_shock": 0.1621,
+                    "confidence_score": 0.5663,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            }
+        ]
+    },
+    {
+        "image": "India_000173.jpg",
+        "simulated_speed_kmh": 35.0,
+        "potholes_found": 2,
+        "detections": [
+            {
+                "pothole_id": 1,
+                "geometry": {
+                    "distance_z_m": 3.7,
+                    "width_cm": 30.9,
+                    "length_cm": 18.0,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 1328.1,
+                    "edge_slope_deg": 65.8
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 35.0,
+                    "simulated_peak_g": 1.1284,
+                    "speed_norm_shock": 0.1161,
+                    "confidence_score": 0.9241,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "PHYSICALLY_VALIDATED"
+                }
+            },
+            {
+                "pothole_id": 2,
+                "geometry": {
+                    "distance_z_m": 3.46,
+                    "width_cm": 258.5,
+                    "length_cm": 183.1,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 94351.9,
+                    "edge_slope_deg": 12.3
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 35.0,
+                    "simulated_peak_g": 0.9308,
+                    "speed_norm_shock": 0.0957,
+                    "confidence_score": 1.0,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "PHYSICALLY_VALIDATED"
+                }
+            }
+        ]
+    },
+    {
+        "image": "India_000402.jpg",
+        "simulated_speed_kmh": 40.0,
+        "potholes_found": 2,
+        "detections": [
+            {
+                "pothole_id": 1,
+                "geometry": {
+                    "distance_z_m": 3.15,
+                    "width_cm": 99.8,
+                    "length_cm": 41.6,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 44299.9,
+                    "edge_slope_deg": 43.9
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 40.0,
+                    "simulated_peak_g": 1.5234,
+                    "speed_norm_shock": 0.1371,
+                    "confidence_score": 0.6041,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            },
+            {
+                "pothole_id": 2,
+                "geometry": {
+                    "distance_z_m": 3.47,
+                    "width_cm": 145.0,
+                    "length_cm": 73.5,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 133169.5,
+                    "edge_slope_deg": 28.5
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 40.0,
+                    "simulated_peak_g": 1.9389,
+                    "speed_norm_shock": 0.1745,
+                    "confidence_score": 0.1989,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            }
+        ]
+    },
+    {
+        "image": "India_000439.jpg",
+        "simulated_speed_kmh": 45.0,
+        "potholes_found": 6,
+        "detections": [
+            {
+                "pothole_id": 1,
+                "geometry": {
+                    "distance_z_m": 3.82,
+                    "width_cm": 90.7,
+                    "length_cm": 46.8,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 36167.9,
+                    "edge_slope_deg": 40.5
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 45.0,
+                    "simulated_peak_g": 1.5236,
+                    "speed_norm_shock": 0.1219,
+                    "confidence_score": 0.7025,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "PHYSICALLY_VALIDATED"
+                }
+            },
+            {
+                "pothole_id": 2,
+                "geometry": {
+                    "distance_z_m": 6.14,
+                    "width_cm": 68.1,
+                    "length_cm": 32.3,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 28551.9,
+                    "edge_slope_deg": 51.1
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 45.0,
+                    "simulated_peak_g": 1.3682,
+                    "speed_norm_shock": 0.1095,
+                    "confidence_score": 0.855,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "PHYSICALLY_VALIDATED"
+                }
+            },
+            {
+                "pothole_id": 3,
+                "geometry": {
+                    "distance_z_m": 6.9,
+                    "width_cm": 51.0,
+                    "length_cm": 33.5,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 23797.6,
+                    "edge_slope_deg": 50.0
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 45.0,
+                    "simulated_peak_g": 1.3856,
+                    "speed_norm_shock": 0.1108,
+                    "confidence_score": 0.8397,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "PHYSICALLY_VALIDATED"
+                }
+            },
+            {
+                "pothole_id": 4,
+                "geometry": {
+                    "distance_z_m": 6.27,
+                    "width_cm": 46.4,
+                    "length_cm": 30.5,
+                    "depth_max_cm": 10.1,
+                    "volume_cm3": 490.1,
+                    "edge_slope_deg": 33.6
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 45.0,
+                    "simulated_peak_g": 0.6735,
+                    "speed_norm_shock": 0.0539,
+                    "confidence_score": 0.9784,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "PHYSICALLY_VALIDATED"
+                }
+            },
+            {
+                "pothole_id": 5,
+                "geometry": {
+                    "distance_z_m": 9.33,
+                    "width_cm": 203.2,
+                    "length_cm": 38.1,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 88180.3,
+                    "edge_slope_deg": 46.4
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 45.0,
+                    "simulated_peak_g": 1.4134,
+                    "speed_norm_shock": 0.1131,
+                    "confidence_score": 0.8141,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "PHYSICALLY_VALIDATED"
+                }
+            },
+            {
+                "pothole_id": 6,
+                "geometry": {
+                    "distance_z_m": 3.44,
+                    "width_cm": 54.9,
+                    "length_cm": 54.2,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 23066.4,
+                    "edge_slope_deg": 36.4
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 45.0,
+                    "simulated_peak_g": 1.6831,
+                    "speed_norm_shock": 0.1347,
+                    "confidence_score": 0.5291,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            }
+        ]
+    },
+    {
+        "image": "India_000475.jpg",
+        "simulated_speed_kmh": 25.0,
+        "potholes_found": 4,
+        "detections": [
+            {
+                "pothole_id": 1,
+                "geometry": {
+                    "distance_z_m": 4.26,
+                    "width_cm": 83.6,
+                    "length_cm": 55.5,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 42025.8,
+                    "edge_slope_deg": 35.8
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 25.0,
+                    "simulated_peak_g": 1.8531,
+                    "speed_norm_shock": 0.2669,
+                    "confidence_score": 0.0399,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            },
+            {
+                "pothole_id": 2,
+                "geometry": {
+                    "distance_z_m": 10.59,
+                    "width_cm": 76.2,
+                    "length_cm": 53.5,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 41009.9,
+                    "edge_slope_deg": 36.8
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 25.0,
+                    "simulated_peak_g": 1.8516,
+                    "speed_norm_shock": 0.2666,
+                    "confidence_score": 0.0402,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            },
+            {
+                "pothole_id": 3,
+                "geometry": {
+                    "distance_z_m": 5.7,
+                    "width_cm": 67.6,
+                    "length_cm": 35.5,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 20681.0,
+                    "edge_slope_deg": 48.4
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 25.0,
+                    "simulated_peak_g": 1.8305,
+                    "speed_norm_shock": 0.2636,
+                    "confidence_score": 0.0457,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            },
+            {
+                "pothole_id": 4,
+                "geometry": {
+                    "distance_z_m": 3.36,
+                    "width_cm": 39.8,
+                    "length_cm": 20.9,
+                    "depth_max_cm": 20.0,
+                    "volume_cm3": 13133.2,
+                    "edge_slope_deg": 62.4
+                },
+                "dynamic_validation": {
+                    "simulated_speed_kmh": 25.0,
+                    "simulated_peak_g": 1.4053,
+                    "speed_norm_shock": 0.2024,
+                    "confidence_score": 0.3391,
+                    "severity_tier": 3,
+                    "tier_description": "Tier 3: Critical Structural Road Hazard",
+                    "validation_status": "SUSPICIOUS_OVERESTIMATE"
+                }
+            }
+        ]
+    }
+]

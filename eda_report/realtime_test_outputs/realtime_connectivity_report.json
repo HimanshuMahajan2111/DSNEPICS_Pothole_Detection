@@ -1,0 +1,84 @@
+{
+  "total": 11,
+  "passed": 11,
+  "failed": 0,
+  "tests": [
+    {
+      "id": "T01",
+      "name": "Single-Image Pipeline (detect\u21923D\u2192sim\u2192validate\u21923D-viz)",
+      "status": "PASS",
+      "detail": "depth=12.0cm length=677cm width=432cm | peak_g=0.5784 | conf=0.43 | tier=3 | 3D HTML=179KB \u2713",
+      "duration_ms": 3240.24
+    },
+    {
+      "id": "T02",
+      "name": "Video Frame Loader (directory scan + decode FPS)",
+      "status": "PASS",
+      "detail": "30/101 frames decoded | shape=[(480, 848)] | load speed=147 FPS",
+      "duration_ms": 205.05
+    },
+    {
+      "id": "T03",
+      "name": "Real-Time Video Stream (IoU tracking + FPS measure)",
+      "status": "PASS",
+      "detail": "20 frames | 87.4 FPS | avg=11.4ms P95=12.3ms | detections_total=21 | unique_track_ids=10",
+      "duration_ms": 265.94
+    },
+    {
+      "id": "T04",
+      "name": "3D Reconstruction Plausibility (depth, width, tier)",
+      "status": "PASS",
+      "detail": "\n    bbox=(0.1, 0.6, 0.5, 0.75) \u2192 z=8.3m d=12.0cm w=584cm tier=3\n    bbox=(0.0, 0.65, 0.4, 0.8) \u2192 z=6.2m d=1.2cm w=350cm tier=3\n    bbox=(0.4, 0.7, 0.9, 0.85) \u2192 z=5.0m d=12.0cm w=630cm tier=3\n    bbox=(0.2, 0.75, 0.6, 0.9) \u2192 z=4.2m d=12.0cm w=350cm tier=3",
+      "duration_ms": 4769.9
+    },
+    {
+      "id": "T05",
+      "name": "Quarter-Car Dynamic Simulation (peak_g sweep)",
+      "status": "PASS",
+      "detail": "\n    d=  1.0cm l=  20cm v=20.0kmh \u2192 peak_g=0.2226 rms=0.0384 p2p=0.4394\n    d=  2.5cm l=  35cm v=30.0kmh \u2192 peak_g=0.6101 rms=0.1055 p2p=1.1683\n    d=  5.0cm l=  50cm v=40.0kmh \u2192 peak_g=1.2569 rms=0.2178 p2p=2.3863\n    d=  8.0cm l=  70cm v=50.0kmh \u2192 peak_g=2.1466 rms=0.3641 p2p=3.9605\n    d= 12.0cm l=  90cm v=60.0kmh \u2192 peak_g=3.2659 rms=0.5584 p2p=5.9611",
+      "duration_ms": 771.67
+    },
+    {
+      "id": "T06",
+      "name": "Sensor Cross-Validation (residual, confidence, tiers)",
+      "status": "PASS",
+      "detail": "\n    d=2.0cm \u2192 tier=1 conf=0.97 residual=0.114 [PHYSICALLY_VALIDATED]\n    d=5.0cm \u2192 tier=2 conf=0.74 residual=0.385 [PHYSICALLY_VALIDATED]\n    d=10.0cm \u2192 tier=3 conf=0.61 residual=0.499 [SUSPICIOUS_OVERESTIMATE]",
+      "duration_ms": 169.83
+    },
+    {
+      "id": "T07",
+      "name": "GIS Mapper Connectivity (Leaflet HTML output)",
+      "status": "PASS",
+      "detail": "GIS HTML=9KB | 3 potholes | Leaflet \u2713 | 30 GPS coords",
+      "duration_ms": 56.6
+    },
+    {
+      "id": "T08",
+      "name": "Degradation Forecaster (TTF monotonicity, batch)",
+      "status": "PASS",
+      "detail": "\n    depth=2.0cm width=25.0cm \u2192 raw_TTF=None (effective=999d) final_depth=4.3cm\n    depth=5.0cm width=50.0cm \u2192 raw_TTF=62 (effective=62d) final_depth=10.7cm\n    depth=10.0cm width=80.0cm \u2192 raw_TTF=0 (effective=0d) final_depth=15.0cm",
+      "duration_ms": 512.67
+    },
+    {
+      "id": "T09",
+      "name": "Integrated Dashboard Artifact (content checks)",
+      "status": "PASS",
+      "detail": "Dashboard HTML=17KB | all 5 content checks \u2713",
+      "duration_ms": 0.68
+    },
+    {
+      "id": "T10",
+      "name": "Module Connectivity Chain (image\u2192recon\u2192sim\u2192val\u2192GIS)",
+      "status": "PASS",
+      "detail": "depth=12.0cm \u2192 peak_g=0.5784g \u2192 tier=3 conf=0.43 \u2192 TTF=0d \u2192 GIS HTML saved \u2713",
+      "duration_ms": 418.15
+    },
+    {
+      "id": "T11",
+      "name": "Full End-to-End Latency (\u22655 FPS target on CPU)",
+      "status": "PASS",
+      "detail": "25 frames | 20.5 FPS | avg=48.7ms P95=306.6ms\n    Reconstructions run: 5 keyframes\n    Stage breakdown: load=2.8ms | detect=2.4ms | track=0.0ms | recon_keyframe=43.5ms",
+      "duration_ms": 1228.86
+    }
+  ]
+}

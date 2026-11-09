@@ -1,0 +1,81 @@
+﻿\documentclass[11pt,a4paper]{report}
+
+% --- Core Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage[colorlinks=true, linkcolor=blue!70!black, citecolor=green!60!black, urlcolor=blue!80!black]{hyperref}
+
+% --- Header and Footer Styling ---
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\footnotesize EPICS DSN3099: Comprehensive Technical Documentation}
+\lhead{\footnotesize Vision-Inertial 3D Pothole Detection Pipeline}
+\cfoot{\thepage}
+
+% --- Custom Design Reflection Callout Box ---
+\newtcolorbox{designreflection}[2][]{
+    enhanced,
+    colback=blue!3!white,
+    colframe=blue!65!black,
+    fonttitle=\bfseries\normalsize,
+    coltitle=white,
+    title={Design Reflection \& Engineering Decision: #2},
+    arc=2mm,
+    boxrule=1.2pt,
+    left=10pt,
+    right=10pt,
+    top=8pt,
+    bottom=8pt,
+    drop shadow=black!15!white,
+    #1
+}
+
+% --- Code Listing Styling ---
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!8},
+    keywordstyle=\color{blue!80!black}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red!70!black}
+}
+
+\title{\textbf{\LARGE Rural Road Condition, Connectivity Gap \& Safety Mapper}\\
+\large Multi-Modal 3D Geometry Prediction, Inertial Validation, and Road Anomaly Intelligence}
+\author{\textbf{Autonomous Road Infrastructure \& Safety Research Group} \\
+Course: DSN3099 -- Engineering Projects in Community Service (EPICS)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This master technical specification documents the architecture, signal processing algorithms, computer vision pipelines, 3D geometric reconstruction models, and vehicle dynamic validation frameworks developed for the EPICS DSN3099 project. By unifying decoupled low-cost monocular RGB dashcam feeds with smartphone/vehicle accelerometer streams, the system achieves sub-centimeter pothole depth characterization validated through physical quarter-car dynamic simulation.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% --- MODULAR SEGMENTS ---
+\input{segments/segment_01_preprocessing_and_cleaning.tex}
+\input{segments/segment_02_exploratory_data_analysis.tex}
+\input{segments/segment_03_cross_modal_bridging_analysis.tex}
+\input{segments/segment_04_feature_engineering_and_selection.tex}
+\input{segments/segment_05_3d_reconstruction_and_simulation.tex}
+\input{segments/segment_06_video_tracking_and_gis_mapper.tex}
+\input{segments/segment_07_predictive_intelligence_and_integrated_dashboard.tex}
+
+\end{document}
+
+
