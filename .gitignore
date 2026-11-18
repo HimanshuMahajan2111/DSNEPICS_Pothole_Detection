@@ -1,72 +1,58 @@
-# ── Python ────────────────────────────────────────────────────────────────────
+# ── Python ──
 __pycache__/
 *.py[cod]
-*$py.class
-*.pyo
-*.pyd
-.Python
-*.egg
 *.egg-info/
 dist/
 build/
-eggs/
-parts/
-var/
-sdist/
-develop-eggs/
-.installed.cfg
-lib/
-lib64/
+*.egg
+.eggs/
 
-# ── Virtual environments ───────────────────────────────────────────────────────
+# ── Virtual Environments ──
 venv/
-.venv/
+.env/
 env/
-ENV/
 
-# ── Jupyter ───────────────────────────────────────────────────────────────────
-.ipynb_checkpoints/
-*.ipynb
-
-# ── IDE / OS ──────────────────────────────────────────────────────────────────
+# ── IDE / Editor ──
 .vscode/
 .idea/
-*.DS_Store
+*.swp
+*.swo
+*~
+
+# ── OS ──
+.DS_Store
 Thumbs.db
 desktop.ini
 
-# ── Large data archives (never commit raw zips) ───────────────────────────────
+# ── Data Archives (Too Large for Git) ──
 *.zip
-*.tar.gz
-*.tar.bz2
-*.7z
-*.rar
-
-# ── Large binary / raster data ────────────────────────────────────────────────
-*.tif
-*.tiff
-*.geotiff
-
-# ── Raw / unprocessed datasets (too large for GitHub) ─────────────────────────
-data/sensor_data/
-data/combined/
 data/dashcam_data/
-
-# Vision dataset images + labels (708 MB — use DVC or external storage)
-data/processed/vision/
-
-# Video frames (use external storage)
-data/processed/video/
-
-# ── Large sensor CSVs (> 50 MB each) — keep only processed feature CSVs ───────
-# Specifically exclude IVP raw CSVs
 data/sensor_data/
+data/pothole_detector_dataset/images/
+data/pothole_depth_dataset/
+data/combined/
+data/processed/
+data/pothole_detector_dataset/labels/
 
-# ── Keep these processed artefacts (small, important) ─────────────────────────
-# data/processed/features/   ← KEEP (< 2 MB)
-# data/processed/sensors/    ← KEEP (< 10 MB)
+# ── Large Model Weights ──
+yolov8n.pt
+yolov8s.pt
+pothole_detection_pipeline/runs/
+pothole_depth_pipeline_v2/models/
 
-# ── Logs / temp ───────────────────────────────────────────────────────────────
+# ── Streamlit User Uploads (Runtime) ──
+streamlit_app/assets/uploads/
+
+# ── Generated Outputs & Reports (Reproducible) ──
+unified_pothole_pipeline/outputs/*.png
+unified_pothole_pipeline/outputs/*.ply
+unified_pothole_pipeline/reports/*.json
+pothole_3d_reconstruction/output/
+pothole_sensor_depth_engine/outputs/
+
+# ── Logs & Misc ──
 *.log
-*.tmp
-.streamlit/secrets.toml
+documentation/*.log
+documentation/*.aux
+documentation/*.out
+documentation/*.synctex.gz

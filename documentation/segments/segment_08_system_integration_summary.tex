@@ -1,0 +1,165 @@
+% =========================================================================
+% SEGMENT 08: SYSTEM INTEGRATION SUMMARY & PERFORMANCE OVERVIEW
+% =========================================================================
+
+\section{System Integration Summary and Full-Stack Performance Overview}
+\label{sec:system_integration_summary}
+
+\subsection{End-to-End Pipeline Architecture}
+The EPICS DSN3099 system integrates nine distinct computational modules into a single cohesive production pipeline. Figure~\ref{fig:full_stack_architecture} illustrates the complete data flow from raw sensor ingestion to municipal GIS output.
+
+\begin{figure}[htbp]
+\centering
+\small
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50,arc=1mm,title=\textbf{Full-Stack Architecture: Raw Pixels $\to$ Municipal GIS Intelligence}]
+\begin{center}
+\textbf{[INPUT: Dashcam JPG / PNG Image or MP4 Video Stream]} \\
+$\Downarrow$ \\
+\fbox{\parbox{0.88\textwidth}{\textbf{Layer 1: Dual-Mode Pothole Detector (\texttt{detect\_multiple\_potholes})} \\
+$\bullet$ Mode A: Adaptive Gaussian threshold (dry / shadowed potholes, dark depressions) \\
+$\bullet$ Mode B: Bright-patch detection (water-filled, reflective surfaces) \\
+$\bullet$ NMS (IoU $= 0.28$) + vehicle exclusion (HSV saturation, edge density, aspect ratio) \\
+$\bullet$ Returns up to 12 normalized $[\,c_x,\,c_y,\,b_w,\,b_h\,]$ bounding boxes per frame}} \\
+$\Downarrow$ \\
+\fbox{\parbox{0.88\textwidth}{\textbf{Layer 2: Monocular 3D Reconstructor (\texttt{Pothole3DReconstructor})} \\
+$\bullet$ Perspective unprojection: $Z = H_{\text{cam}} / (c_y - y_{\text{horizon}})$ \\
+$\bullet$ RANSAC annular ring datum fit (200 trials, $\tau_{\text{plane}} = 0.03\,\text{m}$) \\
+$\bullet$ Outputs: depth$_{\text{max}}$ (cm), width (cm), length (cm), volume (cm$^3$), distance Z (m)}} \\
+$\Downarrow$ \\
+\fbox{\parbox{0.88\textwidth}{\textbf{Layer 3: Quarter-Car Physics Simulator (\texttt{QuarterCarSimulator})} \\
+$\bullet$ 2-DOF ODE: $m_s = 300\,\text{kg}$, $m_u = 45\,\text{kg}$, $k_s = 18{,}500\,\text{N/m}$, $k_t = 190{,}000\,\text{N/m}$ \\
+$\bullet$ Parabolic road excitation $z_r(t)$; RK45 adaptive solver, $\Delta t_{\max} = 0.005\,\text{s}$ \\
+$\bullet$ Outputs: sprung acceleration waveform $a_z(t)$, peak shock $[\,g\,]$}} \\
+$\Downarrow$ \\
+\fbox{\parbox{0.88\textwidth}{\textbf{Layer 4: Cross-Modal Validator (\texttt{SensorCrossValidator})} \\
+$\bullet$ Expected shock: $a_{\text{exp}} = 0.08 \cdot d_{\max}^{0.82} \cdot (v/35)^{0.5}$ \\
+$\bullet$ Confidence: $C_{\text{dyn}} = \exp(-\epsilon_{\text{res}}^2 / 0.5)$; Tier assignment \\
+$\bullet$ Outputs: validation status (PASS/WARN/FAIL), confidence score, consistency residual}} \\
+$\Downarrow$ \\
+\fbox{\parbox{0.88\textwidth}{\textbf{Layer 5: Dashboard Analytics \& Visualization (\texttt{src/app.py})} \\
+$\bullet$ 5-KPI strip: detected count, max depth, corridor health, fill volume, urgency \\
+$\bullet$ Sensor Reading Pipeline (5-stage live-value transparency cards) \\
+$\bullet$ 3D WebGL mesh (Plotly Surface) + cross-section profile + shock waveform \\
+$\bullet$ Repair cost estimation (PWD rate) + Corridor Health Score donut chart}} \\
+$\Downarrow$ \\
+\textbf{[OUTPUT: GIS Map + Repair BOQ + Health Score + 3D Report]}
+\end{center}
+\end{tcolorbox}
+\caption{Complete full-stack pipeline: dual-mode detection through municipal intelligence.}
+\label{fig:full_stack_architecture}
+\end{figure}
+
+\subsection{Consolidated System Performance Metrics}
+
+Table~\ref{tab:consolidated_metrics} provides a consolidated performance census across all pipeline layers, covering the complete system as deployed in Version 2.5.0.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Consolidated System Performance: EPICS DSN3099 v2.5.0}
+\label{tab:consolidated_metrics}
+\begin{tabularx}{\textwidth}{lp{5.0cm}p{4.2cm}}
+\toprule
+\textbf{Subsystem} & \textbf{Metric} & \textbf{Benchmark} \\
+\midrule
+\multirow{5}{*}{\textbf{ML Classifier}} 
+& Champion Model & Random Forest \\
+& Test Set Accuracy & 96.6\% (Stratified 70/30) \\
+& Weighted F1 Score & 0.967 \\
+& 5-Fold CV Mean Accuracy & 96.1\% ($\pm$0.8\%) \\
+& Inference Latency & 0.038 ms/sample \\
+\midrule
+\multirow{4}{*}{\textbf{3D Reconstruction}} 
+& Median Depth Error & $\pm$0.42 cm vs ground truth \\
+& Median Width Error & $\pm$2.15 cm \\
+& RANSAC Plane Fit & 200 trials, $\tau = 0.03$ m \\
+& Volume Integration & 2D Riemann on $45\times45$ mesh grid \\
+\midrule
+\multirow{4}{*}{\textbf{Physics Simulation}} 
+& ODE Solver & Dormand-Prince RK45 \\
+& Max Step Size & 0.005 s (200 Hz minimum sampling) \\
+& Solver Execution Time & 3.8 ms per pothole candidate \\
+& Cabin Isolation Factor & $\alpha_{\text{mount}} = 0.3394$ (empirical from IVP dataset) \\
+\midrule
+\multirow{4}{*}{\textbf{Validation}} 
+& Confidence Acceptance Threshold & $C_{\text{dyn}} \ge 0.65$ \\
+& Validated Consistency Rate & 91.3\% on authentic defects \\
+& Optical Overestimate Rejection & 88.5\% (glare / reflections purged) \\
+& Cross-Modal MAE & $\pm$0.38 cm depth vs AASHTO field data \\
+\midrule
+\multirow{4}{*}{\textbf{Video Tracking}} 
+& Processing Throughput & 24.8 FPS (CPU multi-threaded) \\
+& IoU Association Threshold & 0.25 \\
+& Entity Deduplication Accuracy & 94.2\% \\
+& Sweet Spot for Reconstruction & $c_y \in [0.65, 0.85]$ ($Z \in [2.0, 4.5]$ m) \\
+\midrule
+\multirow{3}{*}{\textbf{GIS Mapping}} 
+& Corridor Length Surveyed & 15.0 km trajectory \\
+& Road Quality Score (RQS) & 62/100 (Scheduled Repair) \\
+& CGSI Alert Threshold & $> 0.5$ km$^{-1}$ \\
+\midrule
+\multirow{4}{*}{\textbf{Dashboard (v2.5.0)}} 
+& Repair Cost Estimation & PWD Rs.8,000/m$^3$ + 1.4$\times$ labour \\
+& Corridor Health Score Range & 0 (catastrophic) to 100 (perfect) \\
+& Urgency Categories & Immediate / 30-Day / 90-Day / Monitor \\
+& Sensor Pipeline Stages Disclosed & 5 (Calibration $\to$ Validation) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Codebase Module Registry}
+Table~\ref{tab:module_registry} maps each functional subsystem to its implementing source file within the \texttt{src/} directory.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Source Code Module Registry --- EPICS DSN3099}
+\label{tab:module_registry}
+\begin{tabularx}{\textwidth}{p{5.4cm}X}
+\toprule
+\textbf{Source File} & \textbf{Functional Responsibility} \\
+\midrule
+\texttt{src/app.py} & Main Streamlit dashboard; all 5 modules; neo-brutalist UI \\
+\texttt{src/geometry/depth\_reconstructor.py} & Monocular 3D RANSAC reconstruction engine \\
+\texttt{src/geometry/visualize\_3d\_pothole.py} & Plotly WebGL 3D mesh and cross-section generator \\
+\texttt{src/simulation/quarter\_car\_model.py} & 2-DOF Quarter-Car ODE simulator (RK45) \\
+\texttt{src/validation/sensor\_cross\_validator.py} & Cross-modal physics consistency validator \\
+\texttt{src/predictive/degradation\_forecaster.py} & AASHTO super-linear degradation forecaster \\
+\texttt{src/video/video\_processor.py} & IoU/Kalman multi-target dashcam tracker \\
+\texttt{src/gis/road\_mapper.py} & Leaflet.js GIS map generator + RQS + CGSI \\
+\texttt{src/dashboard/integrated\_dashboard.py} & Standalone HTML operations command centre \\
+\texttt{src/main\_pipeline.py} & Batch inference orchestrator for image sequences \\
+\texttt{src/utils/train\_and\_tune\_models.py} & ML model training, hyperparameter tuning \\
+\texttt{src/utils/realistic\_ml\_benchmark.py} & Stratified 70/30 benchmark with noise augmentation \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Civil Engineering Impact Summary}
+The EPICS DSN3099 system addresses three distinct failure modes in rural road monitoring that existing tools cannot resolve:
+
+\begin{enumerate}
+    \item \textbf{Capital Barrier}: By operating on \$30 USB dashcams and unmodified smartphones, the system eliminates the \$150,000+ laser profilometer barrier, making autonomous road monitoring accessible to gram panchayat road committees and block development offices.
+
+    \item \textbf{Spatial Blindness}: The GIS connectivity layer detects when Tier~3 pothole clusters form linear barriers across road corridors, flagging routes where ambulances, agricultural supply trucks, and school buses face suspension-critical hazard concentrations---converting raw pothole data into connectivity policy evidence.
+
+    \item \textbf{Maintenance Deferral}: The TTF model and repair cost estimator quantify the economic penalty of deferred maintenance. A 90-day deferral of a moderate cavity costs $2.34\times$ the preventative baseline; a 120-day deferral costs $4.12\times$. These multipliers provide municipal highway engineers with mathematically verifiable arguments for proactive maintenance budget requests.
+\end{enumerate}
+
+\begin{designreflection}{Sensor Pipeline Transparency as a Trust Architecture}
+In early field tests with PWD engineers, the most common question was: ``How do I know this depth reading is correct?'' Black-box AI outputs---however accurate---are insufficient for civil engineering procurement decisions that may involve hundreds of thousands of rupees in construction contracts.
+
+The 5-stage Sensor Reading Pipeline section in the redesigned Streamlit dashboard directly addresses this trust deficit. By rendering the actual numerical value at each computation stage---$f_{\text{norm}}$, $Z$ distance, interior vs road pixel mean, contrast ratio, ODE peak G, and validation confidence---the dashboard transforms from a prediction tool into an auditable metrological instrument. Engineers can challenge any stage, trace discrepancies to their physical cause (glare artifact, shadow masking, water reflection), and decide whether to accept or override the AI recommendation. This transparency architecture is what distinguishes a research prototype from a deployable public works tool.
+\end{designreflection}
+
+\subsection{Repository and Deployment}
+The complete source code, trained ML models, processed feature CSVs, and EDA reports are hosted at:\\[6pt]
+\texttt{https://github.com/HimanshuMahajan2111/DSNEPICS\_Pothole\_Detection}\\[6pt]
+The Streamlit dashboard is launched via:
+\begin{lstlisting}[language=bash]
+cd d:/DSN3099-EPICS/Implementation
+streamlit run src/app.py --server.port 8501
+\end{lstlisting}
+
+Raw vision datasets (India RDD2022, CRDDC2022, BharatPotHole) and sensor archives (IVP, SmartRoadSense, RoadSens-4M) are excluded from version control due to size constraints and are documented in \texttt{DATASET\_OVERVIEW.md}.
+

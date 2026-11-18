@@ -1,0 +1,76 @@
+{
+    "architecture": "Multimodal Tri-Branch Fusion (Vision + Color Segmentation + Quarter-Car IMU)",
+    "test_samples": 427,
+    "train_samples": 1985,
+    "overfitting_gap": {
+        "train_mae_cm": 0.1451,
+        "test_mae_cm": 0.1758,
+        "train_tier_acc_pct": 89.72,
+        "test_tier_acc_pct": 91.1,
+        "verdict": "HEALTHY GENERALIZATION"
+    },
+    "depth_regression_metrics": {
+        "mae_cm": 0.1758,
+        "median_ae_cm": 0.1292,
+        "rmse_cm": 0.238,
+        "mape_pct": 5.7,
+        "r2_score": 0.9639,
+        "pearson_r": 0.9819,
+        "spearman_rho": 0.9865
+    },
+    "depth_accuracy_thresholds": {
+        "delta_1_10_acc_pct": 83.37,
+        "delta_1_25_acc_pct": 99.06,
+        "delta_1_56_acc_pct": 100.0,
+        "abs_rel_error": 0.057,
+        "sq_rel_error": 0.0165,
+        "silog_error": 7.3373
+    },
+    "severity_tier_classification": {
+        "accuracy_pct": 91.1,
+        "balanced_accuracy_pct": 93.84,
+        "macro_precision": 0.6991,
+        "macro_recall": 0.9384,
+        "macro_f1": 0.7435,
+        "weighted_f1": 0.9144,
+        "cohens_kappa": 0.8241,
+        "matthews_corrcoef_mcc": 0.8248,
+        "confusion_matrix_3x3": [
+            [
+                218,
+                14,
+                0
+            ],
+            [
+                18,
+                169,
+                6
+            ],
+            [
+                0,
+                0,
+                2
+            ]
+        ],
+        "per_tier_metrics": {
+            "Tier 1: Minor": {
+                "precision": 0.9237,
+                "recall": 0.9397,
+                "f1_score": 0.9316,
+                "support": 232
+            },
+            "Tier 2: Moderate": {
+                "precision": 0.9235,
+                "recall": 0.8756,
+                "f1_score": 0.8989,
+                "support": 193
+            },
+            "Tier 3: Critical": {
+                "precision": 0.25,
+                "recall": 1.0,
+                "f1_score": 0.4,
+                "support": 2
+            }
+        }
+    }
+}

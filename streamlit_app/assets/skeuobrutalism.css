@@ -1,0 +1,366 @@
+/*
+=============================================================================
+SKEUOBRUTALISM DESIGN SYSTEM — HIGH-CONTRAST READABILITY & EXACT 3D SHAPES
+=============================================================================
+Fixed:
+  - Font colors: Pitch black #0d0d0d with crisp text-shadows, zero washed out gray.
+  - High visibility contrast on sidebar, tabs, labels, badges, and meters.
+  - Exact irregular pothole boundary contour styling.
+=============================================================================
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800;900&family=JetBrains+Mono:wght@600;700;800;900&display=swap');
+
+:root {
+    --bg-canvas: #f2eee9;
+    --card-surface: #ffffff;
+    --border-color: #0d0d0d;
+    --border-thickness: 3.5px;
+    --shadow-distance: 6px;
+    
+    /* Tactical Palette */
+    --hazard-yellow: #ffe600;
+    --hazard-black: #0d0d0d;
+    --asphalt-dark: #121417;
+    --radar-cyan: #00f0ff;
+    --infrared-orange: #ff5500;
+    --sensor-green: #00e676;
+    --alert-crimson: #ff1744;
+    
+    /* High-contrast font colors */
+    --text-pure-black: #050505;
+    --text-dark: #1a1a1a;
+    --text-muted: #2d3139;
+}
+
+/* ── GLOBAL CANVAS RESETS ── */
+.stApp {
+    background-color: var(--bg-canvas) !important;
+    background-image: 
+        radial-gradient(#121212 0.85px, transparent 0.85px),
+        radial-gradient(#121212 0.85px, var(--bg-canvas) 0.85px) !important;
+    background-size: 24px 24px !important;
+    background-position: 0 0, 12px 12px !important;
+    font-family: 'Space Grotesk', -apple-system, sans-serif !important;
+    color: var(--text-pure-black) !important;
+}
+
+/* Universal high-contrast text color overrides for Streamlit elements */
+p, span, label, div, h1, h2, h3, h4, h5, h6 {
+    color: var(--text-pure-black) !important;
+}
+
+/* ── INDUSTRIAL SKEUOBRUTALIST HEADER BAR ── */
+.skeuo-header-box {
+    background: linear-gradient(180deg, #fff366 0%, #ffd000 60%, #e6b800 100%);
+    border: var(--border-thickness) solid var(--border-color);
+    box-shadow: 
+        inset 0 3px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -4px 0 rgba(0, 0, 0, 0.25),
+        var(--shadow-distance) var(--shadow-distance) 0px var(--border-color);
+    border-radius: 10px;
+    padding: 24px 30px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skeuo-header-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 9px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #0d0d0d,
+        #0d0d0d 12px,
+        #ffe600 12px,
+        #ffe600 24px
+    );
+    border-bottom: 2.5px solid #0d0d0d;
+}
+
+.brand-title {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 2.4rem !important;
+    line-height: 1.05 !important;
+    text-transform: uppercase !important;
+    letter-spacing: -1.2px !important;
+    color: #050505 !important;
+    margin: 4px 0 6px 0 !important;
+}
+
+.brand-subtitle {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.2px !important;
+    color: #0d0d0d !important;
+    text-transform: uppercase !important;
+}
+
+/* ── TACTILE HARDWARE CARDS ── */
+.skeuo-panel {
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+    border: var(--border-thickness) solid var(--border-color);
+    box-shadow: 
+        inset 0 2px 0 rgba(255, 255, 255, 1.0),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.12),
+        var(--shadow-distance) var(--shadow-distance) 0px var(--border-color);
+    border-radius: 8px;
+    padding: 22px;
+    margin-bottom: 24px;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3.5px solid var(--border-color);
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+}
+
+.panel-title {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 1.25rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: -0.5px !important;
+    margin: 0 !important;
+    color: #050505 !important;
+}
+
+/* ── HARDWARE SCREWS ── */
+.screw {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #aaaaaa 70%, #555555 100%);
+    border: 1.5px solid #0d0d0d;
+    box-shadow: 1px 1px 0 #0d0d0d;
+    position: relative;
+    display: inline-block;
+}
+
+.screw::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: #0d0d0d;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+/* ── TACTICAL BADGES ── */
+.tactical-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.82rem !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    padding: 6px 13px !important;
+    border: 2.5px solid var(--border-color) !important;
+    box-shadow: 3px 3px 0px var(--border-color) !important;
+    border-radius: 4px !important;
+    color: #050505 !important;
+}
+
+.badge-led {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1.5px solid #0d0d0d;
+    box-shadow: 0 0 6px currentColor;
+}
+
+.badge-yellow { background: var(--hazard-yellow) !important; color: #050505 !important; }
+.badge-cyan   { background: var(--radar-cyan) !important; color: #050505 !important; }
+.badge-green  { background: var(--sensor-green) !important; color: #050505 !important; }
+.badge-orange { background: var(--infrared-orange) !important; color: #ffffff !important; }
+.badge-red    { background: var(--alert-crimson) !important; color: #ffffff !important; }
+
+/* ── 3D PUSH BUTTONS ── */
+.stButton > button {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 1.1rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    background: linear-gradient(180deg, #ffe600 0%, #f5cf00 70%, #d4b200 100%) !important;
+    color: #050505 !important;
+    border: 3.5px solid #0d0d0d !important;
+    border-radius: 8px !important;
+    box-shadow: 
+        inset 0 2px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.25),
+        5px 5px 0px #0d0d0d !important;
+    padding: 14px 28px !important;
+    transition: all 0.08s ease !important;
+    cursor: pointer !important;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(180deg, #fff033 0%, #ffd91a 100%) !important;
+    transform: translate(-2px, -2px) !important;
+    box-shadow: 
+        inset 0 2px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.25),
+        7px 7px 0px #0d0d0d !important;
+}
+
+.stButton > button:active {
+    transform: translate(3px, 3px) !important;
+    box-shadow: 
+        inset 0 3px 5px rgba(0, 0, 0, 0.4),
+        2px 2px 0px #0d0d0d !important;
+}
+
+/* ── SKEUOMORPHIC TELEMETRY READOUT METERS ── */
+.telemetry-tile {
+    background: linear-gradient(180deg, #181b20 0%, #0c0e11 100%);
+    border: 3.5px solid #0d0d0d;
+    box-shadow: 
+        inset 0 2px 6px rgba(0, 0, 0, 0.9),
+        inset 0 0 2px rgba(255, 255, 255, 0.2),
+        4px 4px 0px #0d0d0d;
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+}
+
+.telemetry-label {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.8rem !important;
+    font-weight: 800 !important;
+    color: #e2e8f0 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    margin-bottom: 6px !important;
+}
+
+.telemetry-value {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 2.2rem !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -1px !important;
+}
+
+.unit-tag {
+    font-size: 0.9rem !important;
+    font-weight: 800 !important;
+    color: #cbd5e1 !important;
+    margin-left: 3px !important;
+}
+
+/* Digital Phosphor Glow Variants */
+.glow-cyan   { color: #00f0ff !important; text-shadow: 0 0 10px rgba(0, 240, 255, 0.8) !important; }
+.glow-orange { color: #ff6b35 !important; text-shadow: 0 0 10px rgba(255, 107, 53, 0.8) !important; }
+.glow-green  { color: #00e676 !important; text-shadow: 0 0 10px rgba(0, 230, 118, 0.8) !important; }
+.glow-yellow { color: #ffe600 !important; text-shadow: 0 0 10px rgba(255, 230, 0, 0.8) !important; }
+
+/* ── EMERGENCY TIER ALERT BOXES ── */
+.tier-alert-callout {
+    border: 3.5px solid #0d0d0d;
+    box-shadow: 5px 5px 0px #0d0d0d;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-top: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.tier-alert-1 {
+    background: linear-gradient(135deg, #e6ffed 0%, #b8f5c8 100%);
+    border-left: 15px solid #00e676;
+}
+
+.tier-alert-2 {
+    background: linear-gradient(135deg, #fff3e6 0%, #ffd9b3 100%);
+    border-left: 15px solid #ff6b35;
+}
+
+.tier-alert-3 {
+    background: linear-gradient(135deg, #ffebee 0%, #ffb3b8 100%);
+    border-left: 15px solid #ff1744;
+}
+
+/* ── HIGH VISIBILITY SIDEBAR & WIDGET OVERRIDES ── */
+[data-testid="stSidebar"] {
+    background-color: #dcd6cc !important;
+    border-right: 3.5px solid #0d0d0d !important;
+}
+
+[data-testid="stSidebar"] p, [data-testid="stSidebar"] label, [data-testid="stSidebar"] span {
+    color: #050505 !important;
+    font-weight: 800 !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background: #ffffff !important;
+    border: 3px solid #0d0d0d !important;
+    border-bottom: none !important;
+    box-shadow: 3px -3px 0px #0d0d0d !important;
+    border-radius: 6px 6px 0 0 !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    color: #050505 !important;
+    padding: 10px 20px !important;
+}
+
+.stTabs [aria-selected="true"] {
+    background: var(--hazard-yellow) !important;
+    transform: translateY(-2px);
+    color: #050505 !important;
+}
+
+/* Streamlit Selectbox and Sliders Font Contrast */
+div[data-baseweb="select"] * {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 800 !important;
+    color: #050505 !important;
+}
+
+div[data-testid="stSlider"] label {
+    font-weight: 900 !important;
+    color: #050505 !important;
+}
+
+/* ── SKEUOBRUTALIST STREAMLIT CONTAINER BORDER ── */
+div[data-testid="stVerticalBlockBorderWrapper"] > div {
+    background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%) !important;
+    border: 3.5px solid #0d0d0d !important;
+    box-shadow: 
+        inset 0 2px 0 rgba(255, 255, 255, 1.0),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.10),
+        6px 6px 0px #0d0d0d !important;
+    border-radius: 8px !important;
+    padding: 18px !important;
+    margin-bottom: 18px !important;
+}
+
+/* Fix radio buttons horizontal pill layout */
+div[data-testid="stRadio"] > div {
+    gap: 12px !important;
+}
+
+div[data-testid="stRadio"] label {
+    background: #ffffff !important;
+    border: 2.5px solid #0d0d0d !important;
+    box-shadow: 3px 3px 0px #0d0d0d !important;
+    border-radius: 6px !important;
+    padding: 6px 14px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 800 !important;
+    color: #050505 !important;
+    cursor: pointer !important;
+}

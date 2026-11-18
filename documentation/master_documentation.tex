@@ -1,25 +1,34 @@
-﻿\documentclass[11pt,a4paper]{report}
+\documentclass[11pt,a4paper]{report}
 
 % --- Core Packages ---
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[margin=0.85in]{geometry}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{microtype}
 \usepackage{fancyhdr}
 \usepackage{listings}
+\usepackage{enumitem}
+\usepackage{array}
 \usepackage[most]{tcolorbox}
 \usepackage[colorlinks=true, linkcolor=blue!70!black, citecolor=green!60!black, urlcolor=blue!80!black]{hyperref}
+
+% --- Rupee symbol ---
+\usepackage{textcomp}
+\newcommand{\rupee}{\textrm{\textit{Rs.}}}
 
 % --- Header and Footer Styling ---
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\footnotesize EPICS DSN3099: Comprehensive Technical Documentation}
+\rhead{\footnotesize EPICS DSN3099 --- Rural Road Condition \& Safety Mapper}
 \lhead{\footnotesize Vision-Inertial 3D Pothole Detection Pipeline}
 \cfoot{\thepage}
+\renewcommand{\headrulewidth}{1pt}
 
 % --- Custom Design Reflection Callout Box ---
 \newtcolorbox{designreflection}[2][]{
@@ -50,18 +59,62 @@
     stringstyle=\color{red!70!black}
 }
 
-\title{\textbf{\LARGE Rural Road Condition, Connectivity Gap \& Safety Mapper}\\
-\large Multi-Modal 3D Geometry Prediction, Inertial Validation, and Road Anomaly Intelligence}
-\author{\textbf{Autonomous Road Infrastructure \& Safety Research Group} \\
-Course: DSN3099 -- Engineering Projects in Community Service (EPICS)}
-\date{\today}
-
+% =====================================================================
 \begin{document}
 
-\maketitle
+% --- Title Page ---
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\LARGE\bfseries EPICS DSN3099\\[0.4em]
+Rural Road Condition, Connectivity Gap \& Safety Mapper\\[0.6em]}
+{\large Multi-Modal 3D Geometry Prediction, Inertial Validation,\\
+Sensor Pipeline Transparency \& Road Health Intelligence}
 
+\vspace{1.5cm}
+\hrule height 1.5pt
+\vspace{0.6cm}
+
+{\large\bfseries Technical Documentation --- Version 2.5.0}\\[0.4em]
+{\normalsize Engineering Projects in Community Service (EPICS) --- Course DSN3099}
+
+\vspace{1cm}
+\begin{tcolorbox}[colback=gray!5, colframe=gray!60, width=0.88\textwidth, arc=2mm]
+\centering
+\textbf{System Capabilities at a Glance}\\[6pt]
+\small
+\begin{tabular}{ll}
+Pothole Detection Mode & Dual-Mode (Dark Depression + Water-Filled) \\
+3D Reconstruction & Monocular RANSAC Ground-Plane Depth \\
+Physics Validation & 2-DOF Quarter-Car ODE (Dormand-Prince RK45) \\
+ML Champion & Random Forest (96.6\% Accuracy, 0.967 Weighted F1) \\
+Sensor Pipeline Transparency & 5-Stage Live-Value Disclosure \\
+Corridor Health Score & Tier-Weighted CHS (0--100) \\
+Repair Cost Estimate & PWD Rate Model (Rs.8,000/m$^3$ + 1.4$\times$ Labour) \\
+Repair Urgency Logic & 4-Level (Immediate / 30-Day / 90-Day / Monitor) \\
+Predictive Forecasting & AASHTO MEPDG Super-Linear (up to 180 Days) \\
+Geospatial Output & Leaflet.js GIS Map + RQS + CGSI \\
+Video Processing & IoU/Kalman Multi-Target Tracking @ 24.8 FPS \\
+Dashboard Design & Neo-Brutalist Streamlit (Space Grotesk + JetBrains Mono) \\
+\end{tabular}
+\end{tcolorbox}
+
+\vspace{1.5cm}
+{\normalsize\textbf{Himanshu Mahajan} \quad himanshum2109@gmail.com}\\[0.3em]
+{\normalsize Department of Engineering, DSN3099 EPICS Programme}
+
+\vfill
+{\small\today}
+\part{title}\end{titlepage}
+
+% --- Abstract ---
 \begin{abstract}
-This master technical specification documents the architecture, signal processing algorithms, computer vision pipelines, 3D geometric reconstruction models, and vehicle dynamic validation frameworks developed for the EPICS DSN3099 project. By unifying decoupled low-cost monocular RGB dashcam feeds with smartphone/vehicle accelerometer streams, the system achieves sub-centimeter pothole depth characterization validated through physical quarter-car dynamic simulation.
+\noindent
+This master technical specification documents the complete architecture, signal processing algorithms, computer vision pipelines, 3D geometric reconstruction models, vehicle dynamic validation frameworks, and user-facing analytics dashboards developed for the EPICS DSN3099 project: \textit{Rural Road Condition, Connectivity Gap \& Safety Mapper}.
+
+By unifying decoupled low-cost monocular RGB dashcam feeds with smartphone/vehicle accelerometer streams, the system achieves sub-centimeter pothole depth characterization validated through physical quarter-car dynamic simulation. The Version 2.5.0 release introduces five major advances beyond prior documentation: \textbf{(1)} a fully transparent Sensor Reading Pipeline section in the Streamlit dashboard displaying live computed values at each of five stages; \textbf{(2)} a Corridor Health Score (CHS) weighting detected potholes by severity tier; \textbf{(3)} an instantaneous bituminous repair cost estimate using Indian PWD standard rates; \textbf{(4)} a four-level Repair Urgency classifier (Immediate / Within 30 Days / Within 90 Days / Monitor); and \textbf{(5)} a simplified upload-only interface focused on field deployment usability.
+
+The system processes raw dashcam images and produces verified 3D cavity geometry, physics-validated shock predictions, economic repair estimates, corridor health indices, and actionable GIS connectivity maps---all running on commodity consumer hardware with zero specialized survey equipment.
 \end{abstract}
 
 \tableofcontents
@@ -75,7 +128,6 @@ This master technical specification documents the architecture, signal processin
 \input{segments/segment_05_3d_reconstruction_and_simulation.tex}
 \input{segments/segment_06_video_tracking_and_gis_mapper.tex}
 \input{segments/segment_07_predictive_intelligence_and_integrated_dashboard.tex}
+\input{segments/segment_08_system_integration_summary.tex}
 
 \end{document}
-
-

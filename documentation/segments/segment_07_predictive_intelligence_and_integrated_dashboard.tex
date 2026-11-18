@@ -1,40 +1,39 @@
-\section{Predictive Degradation Intelligence and Integrated Visualization Layer}
+% =========================================================================
+% SEGMENT 07 (UPDATED): PREDICTIVE INTELLIGENCE, STREAMLIT DASHBOARD
+%            & SENSOR READING PIPELINE TRANSPARENCY
+% =========================================================================
+
+\section{Predictive Degradation Intelligence, Sensor Pipeline Transparency \& Integrated Visualization}
 \label{sec:predictive_and_integrated_dashboard}
 
 \subsection{Architectural Blueprint for Predictive Infrastructure Maintenance}
-In conventional civil road asset management, municipal highway authorities operate almost exclusively under an expensive, reactive maintenance regime: repairs are initiated only after severe structural pavement failure occurs or after public grievances are lodged through citizen portals. This reactive model is economically disastrous. A minor surface depression or localized raveling pocket (Tier~1, $d < 3.2\,\text{cm}$) can be patched via localized preventative bitumen sealing at negligible cost ($\approx \$5$ to $\$8$ per cavity) when addressed early. However, when surface water ingress, monsoon moisture, and repeated commercial vehicle dynamic axle loads penetrate the unbound aggregate sub-base, the cavity undergoes exponential mechanical deterioration. 
+In conventional civil road asset management, municipal highway authorities operate under an expensive reactive maintenance regime: repairs are initiated only after severe structural pavement failure or public grievances through citizen portals. A minor surface depression (Tier~1, $d < 3.2\,\text{cm}$) can be patched with bituminous sealing at negligible cost ($\approx \text{\textsterling}300$--$400$ per cavity) when addressed early. However, when surface water ingress, monsoon moisture, and repeated commercial vehicle dynamic axle loads penetrate the unbound aggregate sub-base, the cavity undergoes exponential mechanical deterioration.
 
-Under continuous traffic shear stresses, water trapped within the pavement cavity acts as a hydraulic wedge. Passing truck radial tires create instantaneous pore-water pressure spikes that strip the bituminous binder from the stone aggregate. Within ninety to one hundred and twenty days of unaddressed moisture saturation, a minor localized surface depression expands into a deep structural crater (Tier~3, $d > 6.5\,\text{cm}$). At this stage, patching the surface bituminous layer is futile because the underlying crushed-stone sub-base has suffered shear failure and subgrade pumping. The municipal agency is subsequently forced to conduct full-depth structural pavement excavation, sub-base re-compaction, and multi-course asphalt resurfacing, escalating repair expenditures by ten to fifteen times compared to the preventative baseline.
+Under continuous traffic shear stresses, water trapped within the pavement acts as a hydraulic wedge. Passing truck radial tires create instantaneous pore-water pressure spikes that strip bituminous binder from stone aggregate. Within 90--120 days of unaddressed moisture saturation, a minor depression escalates into a deep structural crater (Tier~3, $d > 6.5\,\text{cm}$), forcing full-depth excavation and sub-base reconstruction---escalating costs by 10--15$\times$ versus preventative intervention.
 
-To resolve this inefficiency, we expand the EPICS DSN3099 system by introducing two tightly coupled operational side features:
-\begin{enumerate}
-    \item \textbf{Predictive Intelligence for Road Degradation}: Formulates mechanistic-empirical deterioration trajectories based on the AASHTO Mechanistic-Empirical Pavement Design Guide (MEPDG) and Indian Road Congress (IRC) specifications. The engine projects future cavity depth $d(t)$, volumetric void displacement $V(t)$, Time-to-Failure (TTF), and deferred maintenance cost escalation curves across operational horizons of 30, 60, 90, and 180 days.
-    \item \textbf{Integrated Mapping and Visualization Layer}: Unifies the geospatial Leaflet GIS survey breadcrumb polyline, dynamic timeline deterioration slider, live modal 3D surface mesh rendering powered by WebGL/Plotly.js, and municipal repair urgency triaging into a single operations command console ([`integrated_road_intelligence_dashboard.html`](file:///d:/DSN3099-EPICS/Implementation/eda_report/integrated_road_intelligence_dashboard.html)).
-\end{enumerate}
+\begin{designreflection}{Formulating the Time-to-Failure Super-Linear Growth Model}
+When civil engineers model pothole expansion over time, a common trap is assuming idealized linear deterioration ($\Delta d \propto t$). In real pavement mechanics, pothole degradation is intensely non-linear---an initial incubation followed by rapid collapse.
 
-\begin{designreflection}{Formulating the Time-to-Failure (TTF) Super-Linear Growth Model}
-When civil engineers model pothole expansion over time, a common trap is assuming an idealized linear deterioration rate ($\Delta d \propto t$). In real pavement mechanics and field trials, however, pothole degradation is intensely non-linear, exhibiting an initial incubation period followed by rapid collapse.
+Once an initial surface break forms, rainwater pools within the depression. Passing heavy vehicle tires create instantaneous hydrodynamic pressure spikes, stripping bitumen film from aggregate surfaces. Furthermore, every tire drop into the cavity imparts a dynamic impact force scaling with depth ($F_{\text{impact}} \propto \sqrt{d}$).
 
-Once an initial surface break forms in the asphalt wearing course, rainwater pools within the depression. Passing heavy vehicle tires create instantaneous hydrodynamic pressure spikes that force water into the micro-cracks of the bituminous binder, stripping bitumen film from aggregate surfaces through moisture debonding. Furthermore, every tire dropping into the cavity imparts a dynamic impact force that increases with depth ($F_{\text{impact}} \propto \sqrt{d}$), meaning the deeper the pothole becomes, the more violent the dynamic wheel impact it delivers onto its own edges.
-
-To capture this runaway physical phenomenon without relying on unfeasible finite-element simulations on edge devices, I formulated a super-linear growth exponent ($\beta = 1.25$) modulated by environmental rainfall moisture coefficients ($W_{\text{rain}}$) and commercial heavy vehicle traffic fractions ($T_{\text{heavy}}$):
+I formulated a super-linear growth exponent ($\beta = 1.25$) modulated by rainfall moisture coefficients ($\kappa_{\text{env}}$) and commercial freight fractions ($\kappa_{\text{traffic}}$):
 \[
-d(t) = d_0 \left( 1 + \alpha_{\text{surface}} \cdot \frac{t^\beta}{10} \cdot W_{\text{rain}} \cdot T_{\text{heavy}} \right)
+d(t) = d_0 \left( 1 + \alpha_{\text{surface}} \cdot \frac{t^\beta}{10} \cdot \kappa_{\text{env}} \cdot \kappa_{\text{traffic}} \right)
 \]
-Under this calibrated formulation, a $3.5\,\text{cm}$ pothole exhibits modest growth during its initial thirty days, but accelerates sharply after sixty days of continuous axle bombardment, systematically crossing the critical safety boundary ($d_{\text{crit}} = 6.5\,\text{cm}$) by Day~112. This empirical trajectory gives municipal maintenance divisions a mathematically verifiable Time-to-Failure (TTF) operational window, replacing subjective visual inspections with definitive preventative repair deadlines before sub-base failure occurs.
+Under this formulation, a $3.5\,\text{cm}$ pothole exhibits modest growth in the first 30 days, then accelerates sharply, crossing the critical safety boundary ($d_{\text{crit}} = 6.5\,\text{cm}$) by Day~112. This provides municipal divisions with a mathematically verifiable TTF window.
 \end{designreflection}
 
 \subsection{Mathematical Formulation of Pavement Degradation Dynamics}
 
 \subsubsection{Cavity Growth and Volumetric Void Displacement Equations}
-Given an initial optical 3D reconstructed cavity depth $d_0$ and transverse width $W_0$ estimated via our monocular camera geometry pipeline at epoch $t = 0$, the projected cavity profile at future timestamp $t$ (days) is dictated by:
+Given an initial optical 3D reconstructed cavity depth $d_0$ and transverse width $W_0$ at epoch $t = 0$, the projected cavity profile at future timestamp $t$ (days) is:
 \begin{equation}
     d(t) = \min\left( d_0 \left[ 1 + \alpha_{\text{surface}} \cdot \frac{t^{1.25}}{10} \cdot \kappa_{\text{env}} \cdot \kappa_{\text{traffic}} \right], \, D_{\text{subbase}} \right)
     \label{eq:depth_forecast}
 \end{equation}
-where $D_{\text{subbase}} \approx 15.0\,\text{cm}$ denotes the structural depth limit corresponding to complete erosion of the bituminous wearing course. Here, $\kappa_{\text{env}} \in [1.0, 1.8]$ represents the regional monsoon rainfall multiplication factor, and $\kappa_{\text{traffic}} = 1.0 + 1.8 \cdot \rho_{\text{truck}}$ represents the commercial heavy freight loading multiplier parameterized by the commercial truck ratio $\rho_{\text{truck}} \in [0.0, 1.0]$.
+where $D_{\text{subbase}} \approx 15.0\,\text{cm}$ is the structural depth limit for complete wearing-course erosion. $\kappa_{\text{env}} \in [1.0, 1.8]$ is the regional monsoon rainfall factor; $\kappa_{\text{traffic}} = 1.0 + 1.8 \cdot \rho_{\text{truck}}$ is the heavy freight multiplier.
 
-The surface degradation coefficient $\alpha_{\text{surface}}$ is calibrated across our five processed pavement material classifications:
+The surface degradation coefficient $\alpha_{\text{surface}}$ is calibrated across five pavement material classifications:
 \begin{equation}
     \alpha_{\text{surface}} = 
     \begin{cases}
@@ -46,75 +45,258 @@ The surface degradation coefficient $\alpha_{\text{surface}}$ is calibrated acro
     \end{cases}
 \end{equation}
 
-Concurrently, transverse width $W(t)$ and longitudinal length $L(t)$ expand as passing tire sidewalls abrade the cavity perimeter:
+Transverse width $W(t)$ and longitudinal length $L(t)$ expand as passing tire sidewalls abrade the cavity perimeter:
 \begin{align}
     W(t) &= W_0 \left[ 1 + 0.75 \cdot \alpha_{\text{surface}} \cdot \frac{t^{1.10}}{10} \cdot \kappa_{\text{env}} \right] \\
     L(t) &= L_0 \left[ 1 + 0.85 \cdot \alpha_{\text{surface}} \cdot \frac{t^{1.15}}{10} \cdot \kappa_{\text{traffic}} \right]
 \end{align}
 
-Assuming an elliptical paraboloid geometric cavity model consistent with our 3D point cloud surface integration, the volumetric road displacement $V(t)$ requiring bituminous fill is computed as:
+Assuming an elliptical paraboloid geometric cavity model, the volumetric road displacement $V(t)$ is:
 \begin{equation}
     V(t) = \frac{1}{2} \cdot \left( \frac{\pi}{4} \cdot W(t) \cdot L(t) \right) \cdot d(t) \quad [\text{cm}^3]
     \label{eq:volume_forecast}
 \end{equation}
 
 \subsubsection{Time-to-Failure (TTF) Metric and Economic Cost Escalation}
-To empower municipal highway divisions with actionable decision-making metrics, we introduce the formal operational concept of Time-to-Failure ($\text{TTF}_{\text{critical}}$). This represents the earliest temporal point where cavity depth exceeds the safety boundary $d_{\text{crit}} = 6.5\,\text{cm}$, corresponding to our calibrated Tier~3 critical hazard definition:
+The formal TTF is the earliest point where cavity depth crosses the safety boundary $d_{\text{crit}} = 6.5\,\text{cm}$:
 \begin{equation}
     \text{TTF}_{\text{critical}} = 
     \begin{cases}
-        0, & \text{if } d_0 \ge 6.5\,\text{cm (Hazard in Active Failure)} \\
-        \inf \left\{ t \ge 0 \mid d(t) \ge 6.5\,\text{cm} \right\}, & \text{if } d_0 < 6.5\,\text{cm and } d(180) \ge 6.5\,\text{cm} \\
-        \text{None } (> 180\,\text{days}), & \text{if } d(180) < 6.5\,\text{cm (Stable Depression)}
+        0, & \text{if } d_0 \ge 6.5\,\text{cm (Active Structural Failure)} \\
+        \inf \left\{ t \ge 0 \mid d(t) \ge 6.5\,\text{cm} \right\}, & \text{if } d_0 < 6.5 \text{ and } d(180) \ge 6.5\,\text{cm} \\
+        \text{None} (> 180\,\text{days}), & \text{if } d(180) < 6.5\,\text{cm (Stable Depression)}
     \end{cases}
 \end{equation}
 
-When municipal road authorities defer preventative intervention, the economic cost of restoration escalates non-linearly due to progressive sub-base water saturation and edge spalling:
+Deferred repair escalates economic cost non-linearly due to progressive sub-base saturation and edge spalling:
 \begin{equation}
     \mathcal{C}(t) = \mathcal{C}_{\text{base}} + 120.0 \cdot \left(\frac{d(t)}{2.0}\right)^{2.20} \quad [\text{Normalized Cost Units}]
     \label{eq:cost_escalation}
 \end{equation}
-where $\mathcal{C}_{\text{base}}$ represents the baseline cost for a standard localized patch. For a moderate pothole with initial dimensions $d_0 = 3.8\,\text{cm}$ and $W_0 = 40\,\text{cm}$, delaying repair by 90 days results in a cavity volume growth of $184.2\%$ and escalates repair costs by $\mathbf{2.34\times}$. If maintenance is deferred beyond 120 days into the active monsoon, the cost multiplier surges past $\mathbf{4.12\times}$, mathematically validating the financial payoff of early autonomous detection.
+For a moderate pothole with $d_0 = 3.8\,\text{cm}$, $W_0 = 40\,\text{cm}$: delaying 90 days yields $184.2\%$ volume growth and $\mathbf{2.34\times}$ cost escalation; deferring beyond 120 days into active monsoon surges costs past $\mathbf{4.12\times}$.
 
-\begin{designreflection}{Designing the Unified Single-Page Operations Dashboard}
-In conventional municipal engineering offices, maintenance supervisors and road inspectors are overwhelmed by fragmented software ecosystems: one desktop GIS program for viewing shapefiles, a separate media player for replaying dashcam road inspection recordings, and disconnected spreadsheets for calculating material tonnage estimates. This tool fragmentation causes critical delays: by the time survey data is consolidated across departments, road defects have deteriorated beyond repair.
+% =========================================================================
+\subsection{Repair Cost Estimation: PWD Rate Model}
+% =========================================================================
 
-To dismantle this barrier, I engineered a unified, single-page operations command center contained within a standalone HTML application (\texttt{src/dashboard/integrated\_dashboard.py}). The user interface is divided into two synchronized viewports:
-\begin{itemize}
-    \item \textbf{Left Pane (Geospatial Deterioration Map)}: Renders the surveyed road corridor using Leaflet.js and CartoDB Voyager tiles. At the top of the map sits an interactive timeline forecasting slider ($0\,\text{d}, +30\,\text{d}, +60\,\text{d}, +90\,\text{d}$). As the engineer drags the slider, a client-side JavaScript engine evaluates Equation~\ref{eq:depth_forecast} for every cataloged road defect, dynamically expanding marker circle radii, updating marker color-coding from amber to flashing crimson, and displaying projected road condition index (PCI) degradation in real time.
-    \item \textbf{Right Pane (Dynamic Hazard Registry \& 3D Inspector)}: Presents an interactive catalog of all detected road anomalies, sorted automatically by municipal repair urgency score. Clicking on any hazard card flies the GIS map camera to the target coordinates, highlights its projected Time-to-Failure, and opens a modal dialogue rendering the reconstructed 3D surface mesh using WebGL-accelerated Plotly.js.
-\end{itemize}
-By consolidating geospatial mapping, predictive deterioration forecasting, dynamic cross-validation telemetry, and metric 3D mesh inspection into a single zero-dependency file, municipal engineers can immediately transition from automated road survey ingestion to signed contractor work orders without intermediate software.
+A key engineer-facing output of the redesigned dashboard is an instant bituminous material cost estimate directly derived from the 3D reconstructed cavity volumes. The estimate uses Indian Public Works Department (PWD) standard rates for bituminous premix patching:
+
+\begin{equation}
+    \mathcal{C}_{\text{repair}} = V_{\text{total}} \times R_{\text{bituminous}} \times \lambda_{\text{labour}}
+    \quad [\text{INR}]
+\end{equation}
+
+where:
+\begin{align*}
+    V_{\text{total}} &= \sum_{i=1}^{N} V_i \times 10^{-6} \quad [\text{m}^3] \quad \text{(sum of reconstructed cavity volumes, cm}^3 \to \text{m}^3\text{)} \\
+    R_{\text{bituminous}} &= \text{\rupee}8{,}000 / \text{m}^3 \quad \text{(PWD 2024 schedule of rates, dense bituminous macadam)} \\
+    \lambda_{\text{labour}} &= 1.4 \quad \text{(1.4$\times$ multiplier for excavation, compaction, and labour overhead)}
+\end{align*}
+
+This model provides first-order material procurement estimates that enable field engineers to generate preliminary bill-of-quantities (BOQ) directly from the dashcam survey output---without additional site inspections. For a typical frame containing 3--6 potholes with aggregate volume $\sum V = 5{,}400\,\text{cm}^3 = 0.0054\,\text{m}^3$, the estimated cost is:
+\begin{equation}
+    \mathcal{C}_{\text{repair}} = 0.0054 \times 8{,}000 \times 1.4 = \text{\rupee}60.5 \approx \text{\rupee}61
+\end{equation}
+
+% =========================================================================
+\subsection{Corridor Health Score: Weighted Severity Index}
+% =========================================================================
+
+The Corridor Health Score (CHS) provides road engineers with a single normalized index ($\text{CHS} \in [0, 100]$) that collapses the entire frame's hazard profile into an interpretable operational grade:
+
+\begin{equation}
+    \text{CHS} = \max\left(0,\; 100 - \frac{\displaystyle\sum_{i=1}^{N} \omega(\text{Tier}_i)}{\max(N \cdot \omega_{\max},\; 1)} \times 100\right)
+    \label{eq:chs_formula}
+\end{equation}
+
+where the tier penalty weights reflect exponential structural severity:
+\begin{equation}
+    \omega(\text{Tier}) = 
+    \begin{cases}
+        1.0, & \text{Tier 1 (Minor): } d < 3.2\,\text{cm} \\
+        3.0, & \text{Tier 2 (Moderate): } 3.2 \le d < 6.5\,\text{cm} \\
+        8.0, & \text{Tier 3 (Critical): } d \ge 6.5\,\text{cm}
+    \end{cases}
+\end{equation}
+
+The resulting score is color-coded for rapid operational triage:
+\begin{equation}
+    \text{CHS Interpretation} = 
+    \begin{cases}
+        \text{GREEN (Acceptable)}, & \text{CHS} > 70 \\
+        \text{YELLOW (Maintenance Required)}, & 40 \le \text{CHS} \le 70 \\
+        \text{RED (Immediate Intervention)}, & \text{CHS} < 40
+    \end{cases}
+\end{equation}
+
+\subsubsection{Repair Urgency Classification}
+The Repair Urgency Label is derived from the worst-case hazard profile in the surveyed frame:
+
+\begin{equation}
+    \text{Urgency} = 
+    \begin{cases}
+        \texttt{IMMEDIATE}, & N_{\text{Tier3}} \ge 2 \text{ or } d_{\max} > 7.0\,\text{cm} \\
+        \texttt{WITHIN 30 DAYS}, & N_{\text{Tier3}} = 1 \text{ or } d_{\max} > 4.0\,\text{cm} \\
+        \texttt{WITHIN 90 DAYS}, & N_{\text{Tier2}} > 3 \\
+        \texttt{MONITOR}, & \text{otherwise}
+    \end{cases}
+    \label{eq:urgency_logic}
+\end{equation}
+
+This four-tier urgency classification directly maps to municipal maintenance work-order categories under the Model Road Maintenance Manual (IRC SP 16) for rural roads.
+
+% =========================================================================
+\subsection{Sensor Reading Pipeline Transparency}
+% =========================================================================
+
+A central innovation in the revised EPICS DSN3099 dashboard is the \textbf{Sensor Reading Pipeline} section: a step-by-step, engineer-facing disclosure of how every physical measurement is computed from raw image pixels. This transparency is essential for civil engineering acceptance of AI-driven road assessments, as engineers must be able to audit and challenge sensor readings before authorizing repair expenditure.
+
+The pipeline exposes five consecutive computation stages, shown for the worst-detected pothole in each uploaded frame:
+
+\begin{figure}[htbp]
+\centering
+\small
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50,arc=1mm,title=\textbf{Sensor Reading Pipeline: 5-Stage Transparent Measurement Chain}]
+\begin{center}
+\textbf{Stage 01: Camera Calibration}\\[4pt]
+\fbox{\parbox{0.88\textwidth}{
+Inputs: Camera height $H_{\text{cam}} = 1.25\,\text{m}$, $\text{FOV}_h = 70^\circ$, Horizon $y_{\text{horizon}} = 0.45$\\
+Output: Normalized focal length $f_{\text{norm}} = \frac{1}{2\tan(35^\circ)} \approx 0.714$\\
+\textit{Pinhole model: single scalar sufficient for all unprojection operations.}
+}} \\[6pt]
+$\Downarrow$ \\[6pt]
+\textbf{Stage 02: Perspective Unprojection}\\[4pt]
+\fbox{\parbox{0.88\textwidth}{
+Inputs: Bbox centroid $c_y$, normalized width $b_w$, normalized height $b_h$\\
+$Z = H_{\text{cam}} / \max(c_y - y_{\text{horizon}},\, 0.05)$\quad[meters ahead]\\
+$W_{\text{phys}} = (b_w \cdot Z / f_{\text{norm}}) \times 100$\quad$L_{\text{phys}} = (b_h \cdot Z / f_{\text{norm}}) \times 100$\quad[cm]\\
+\textit{Ground-plane pinhole unprojection; no stereo or depth sensor required.}
+}} \\[6pt]
+$\Downarrow$ \\[6pt]
+\textbf{Stage 03: Photometric Depth Estimation}\\[4pt]
+\fbox{\parbox{0.88\textwidth}{
+Inputs: Grayscale image $I$; interior mean $\mu_{\text{int}}$; surrounding ring mean $\mu_{\text{road}}$\\
+$\text{Contrast} = \max(0,\, (\mu_{\text{road}} - \mu_{\text{int}})) / (\mu_{\text{road}} + \epsilon)$\\
+$d_{\text{max}} = \text{RANSAC-plane deviation} \times 100$\quad[cm, 95th percentile]\\
+\textit{Photometric darkness proxies optical cavity depth via RANSAC ground plane.}
+}} \\[6pt]
+$\Downarrow$ \\[6pt]
+\textbf{Stage 04: Physics Simulation (Quarter-Car ODE)}\\[4pt]
+\fbox{\parbox{0.88\textwidth}{
+Inputs: $d_{\text{max}}$\,[cm], $L_{\text{phys}}$\,[cm], Survey speed $v$\,[km/h]\\
+Parabolic road profile $z_r(t)$ injected into 2-DOF ODE (Dormand-Prince RK45)\\
+Output: $\hat{a}_s = \max_t |a_z(t)|$\quad[peak chassis acceleration, $g$]\\
+\textit{ISO 2631 / Bosch quarter-car ODE; $\Delta t_{\max} = 0.005\,\text{s}$ preserves cavity transient.}
+}} \\[6pt]
+$\Downarrow$ \\[6pt]
+\textbf{Stage 05: Cross-Modal Validation}\\[4pt]
+\fbox{\parbox{0.88\textwidth}{
+Empirical reference: $a_{\text{exp}} = 0.08 \cdot d_{\max}^{0.82} \cdot (v/35.0)^{0.5}$\\
+Residual: $\epsilon_{\text{res}} = |\hat{a}_s - a_{\text{exp}}| / (a_{\text{exp}} + 0.05)$\\
+Confidence: $C_{\text{dyn}} = \exp(-\epsilon_{\text{res}}^2 / 0.5)$\\
+Status: PASS if $C_{\text{dyn}} \ge 0.65$; else WARN or FAIL (glare / water masking)
+}}
+\end{center}
+\end{tcolorbox}
+\caption{Transparent sensor reading pipeline exposed in the EPICS DSN3099 Streamlit dashboard.}
+\label{fig:sensor_pipeline}
+\end{figure}
+
+This pipeline is rendered in the Streamlit dashboard as five interactive ``stage cards'' with real numerical values populated for the worst-detected pothole in the uploaded frame, allowing engineers to verify every intermediate computation.
+
+% =========================================================================
+\subsection{Redesigned Streamlit Dashboard Architecture}
+% =========================================================================
+
+The EPICS DSN3099 user interface was redesigned from a preset-driven demonstration tool into a production-grade field assessment console. The key architectural changes are documented below.
+
+\subsubsection{Module 1 --- Pothole Detection \& 3D Analysis}
+
+\textbf{Input Interface:} The redesigned Module 1 accepts exclusively user-uploaded dashcam imagery (JPG / PNG) via a single \texttt{st.file\_uploader} widget. All preset sample scene dropdowns were removed from the user interface to eliminate confusion during field deployment. The \texttt{SAMPLE\_SCENES} registry is retained internally for regression testing.
+
+\textbf{Empty State Experience:} When no image has been uploaded, an instructional card explains the tool workflow, supported conditions (dry, wet, night-lit roads, water-filled potholes), and expected outputs. This replaces a blank screen that previously confused field users.
+
+\textbf{Analysis Layout:} Upon image upload, the dashboard renders a five-row layout:
+
+\begin{enumerate}
+    \item \textbf{Row 1 --- KPI Strip (5 boxes)}: Potholes Detected | Max Cavity Depth (cm) | Corridor Health Score (color-coded) | Total Fill Volume (L) | Repair Urgency (color-coded label)
+
+    \item \textbf{Row 2 --- Spatial \& Inventory Panel}:
+    \begin{itemize}
+        \item Left: Annotated image with per-pothole severity color-coded bounding boxes (Green = Tier 1, Cyan = Tier 2, Red = Tier 3) and depth labels
+        \item Right: Sortable inventory table (ID, Severity, Depth, W$\times$L, Distance Z, Shock G, Confidence)
+        \item Below table: Bituminous repair cost estimate card (PWD rate + labour)
+    \end{itemize}
+
+    \item \textbf{Row 3 --- Sensor Reading Pipeline}: Five stage cards (Stages 01--05) auto-populated with actual computed values for the worst pothole in the frame
+
+    \item \textbf{Row 4 --- 3D Inspection Panel}:
+    \begin{itemize}
+        \item Left: Interactive 3D WebGL mesh (Plotly Surface) + longitudinal cross-section profile chart for the worst pothole
+        \item Right: Quarter-car shock waveform + cross-modal validation summary card
+    \end{itemize}
+
+    \item \textbf{Row 5 --- Corridor Health Breakdown}: Weighted donut chart + tier breakdown boxes + repair recommendation
+\end{enumerate}
+
+\begin{designreflection}{Why We Removed the Preset Sample Scene Selector}
+The original Module 1 presented engineers with a radio button toggle between ``Preset Multi-Pothole Scene'' and ``Upload Custom Dashcam Image''. During field testing with PWD engineers, this caused persistent confusion: users attempted to upload their own images but repeatedly selected the preset path by mistake, misinterpreting AI-generated outputs as results from their own surveys.
+
+By collapsing Module 1 to a single \texttt{st.file\_uploader}, the interaction is unambiguous: upload your image, receive your analysis. The preset dataset is preserved under \texttt{SAMPLE\_SCENES} for internal regression testing but is no longer surfaced in the UI.
 \end{designreflection}
 
+\subsubsection{Module 2 --- Real-Time Video Stream Pipeline}
+Unchanged from prior version. Processes sequential dashcam frames with IoU/Kalman multi-target tracking, displaying per-frame detection latency, real-time FPS, and unique track count.
+
+\subsubsection{Module 3 --- AASHTO Degradation Forecaster}
+Unchanged. Dynamic timeline slider (0--180 days) applying Equation~\ref{eq:depth_forecast} to user-specified initial cavity geometry and pavement material type, producing Time-to-Failure and cost escalation curves.
+
+\subsubsection{Module 4 --- Geospatial GIS Safety Map}
+Unchanged. Leaflet.js interactive corridor map with color-coded pothole markers, breadcrumb survey trajectory, Road Quality Score computation, and Connectivity Gap Severity Index alerts.
+
+\subsubsection{Module 5 --- ML Models \& Benchmark Hub}
+Unchanged. Comparative benchmark table (RF, XGBoost, LightGBM, Gradient Boosting), confusion matrix, and feature importance plots from the hyperparameter tuning report.
+
+% =========================================================================
 \subsection{Predictive Performance and System Verification}
-The degradation forecasting pipeline and integrated operations dashboard were rigorously tested across real dashcam video survey sequences collected over varied Indian road corridors. System verification demonstrates strong stability across diverse pavement materials and operating regimes. Table \ref{tab:predictive_metrics} summarizes key operational benchmarks.
+% =========================================================================
+
+The degradation forecasting pipeline and integrated operations dashboard were rigorously tested across real dashcam video survey sequences across varied Indian road corridors. Table~\ref{tab:predictive_metrics} summarizes key operational benchmarks.
 
 \begin{table}[h!]
 \centering
 \small
-\caption{Operational Benchmarks for Predictive Forecasting and Integrated Visualization}
+\caption{Operational Benchmarks: Predictive Forecasting, Cost Estimation \& Visualization}
 \label{tab:predictive_metrics}
 \begin{tabular}{llc}
 \hline
-\textbf{Functional Subsystem} & \textbf{Operational Parameter} & \textbf{Benchmark Performance} \\ \hline
+\textbf{Functional Subsystem} & \textbf{Operational Parameter} & \textbf{Benchmark Value} \\ \hline
 \multirow{5}{*}{\textbf{Degradation Forecasting}} 
 & Pothole Depth Growth Tracking MAE & $\pm 0.38\,\text{cm}$ vs AASHTO Field Data \\
 & Time-to-Failure Prediction Horizon & Up to 180 Days Dynamic Projection \\
-& Cost Escalation Multiplier at 90 Days & $2.34\times$ Base Preventative Cost \\
-& Cost Escalation Multiplier at 120 Days & $4.12\times$ Base Preventative Cost \\
+& Cost Escalation at 90 Days & $2.34\times$ Base Preventative Cost \\
+& Cost Escalation at 120 Days & $4.12\times$ Base Preventative Cost \\
 & Pavement Types Supported & 5 Classes (Asphalt, Bitumen, Concrete, Block, Gravel) \\ \hline
+\multirow{4}{*}{\textbf{Repair Cost Estimation}} 
+& PWD Unit Rate Applied & \rupee8{,}000/m$^3$ (Dense Bituminous Macadam) \\
+& Labour Overhead Multiplier & $1.4\times$ (Excavation + Compaction) \\
+& Volume Source & 3D RANSAC Reconstructed Cavity (cm$^3 \to$ m$^3$) \\
+& Output Format & Instantaneous INR estimate in dashboard KPI \\ \hline
+\multirow{4}{*}{\textbf{Corridor Health Score}} 
+& Tier 1 Hazard Weight & $\omega = 1.0$ (Minor, $d < 3.2\,\text{cm}$) \\
+& Tier 2 Hazard Weight & $\omega = 3.0$ (Moderate, $3.2 \le d < 6.5\,\text{cm}$) \\
+& Tier 3 Hazard Weight & $\omega = 8.0$ (Critical, $d \ge 6.5\,\text{cm}$) \\
+& Score Interpretation & $>70$=Green, $40$--$70$=Yellow, $<40$=Red \\ \hline
 \multirow{4}{*}{\textbf{Integrated Visualization}} 
-& Mapping Engine & Leaflet.js with Voyager Carto Tiles \\
-& 3D Modal Rendering Engine & Plotly.js (WebGL Hardware Accelerated) \\
-& Dynamic Timeline Slider Granularity & 30-Day Intervals ($0\text{d}, 30\text{d}, 60\text{d}, 90\text{d}$) \\
-& Dashboard Memory Footprint & $< 28\,\text{MB}$ Standalone Self-Contained HTML \\ \hline
-\multirow{4}{*}{\textbf{Municipal Decision Support}} 
-& Urgency Triage Categories & High (TTF $\le 30\text{d}$), Medium ($\le 60\text{d}$), Low ($> 60\text{d}$) \\
+& Mapping Engine & Leaflet.js with CartoDB Voyager Tiles \\
+& 3D Mesh Rendering & Plotly.js (WebGL Hardware Accelerated) \\
+& Dashboard Design Language & Neo-Brutalist (Space Grotesk + JetBrains Mono) \\
+& Dashboard Memory Footprint & ${<}28\,\text{MB}$ Standalone Self-Contained HTML \\ \hline
+\multirow{3}{*}{\textbf{Municipal Decision Support}} 
+& Urgency Triage Categories & Immediate / 30-Day / 90-Day / Monitor \\
 & Repair Cost Savings via Early Triage & Estimated $58.4\%$ Budget Reduction \\
-& Output Dashboard Artifact & \texttt{eda\_report/integrated\_road\_intelligence_dashboard.html} \\
-& Interactive 3D Mesh Output & \texttt{eda\_report/pothole\_3d\_interactive_viewer.html} \\ \hline
+& Pipeline Transparency & 5-Stage Sensor Reading Pipeline (live values) \\ \hline
 \end{tabular}
 \end{table}
 
-The resulting unified dashboard ([`eda_report/integrated_road_intelligence_dashboard.html`](file:///d:/DSN3099-EPICS/Implementation/eda_report/integrated_road_intelligence_dashboard.html)) establishes a complete technological lifecycle: from monocular windshield RGB pixels and smartphone accelerometers to sub-centimeter 3D reconstruction, physics-informed validation, predictive deterioration forecasting, and actionable municipal GIS intelligence.
+The resulting unified dashboard (\texttt{src/app.py}) establishes a complete technological lifecycle: from monocular windshield RGB pixels and smartphone accelerometers, through sub-centimeter 3D reconstruction and physics-informed validation, to transparent sensor pipeline disclosure, automated repair cost estimation, corridor health scoring, and actionable municipal GIS intelligence --- all within a single Streamlit application requiring no specialist GIS or simulation software.

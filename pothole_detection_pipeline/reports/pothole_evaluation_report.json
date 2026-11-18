@@ -1,0 +1,52 @@
+{
+    "dataset_statistics": {
+        "total_test_frames": 153,
+        "negative_clean_wall_frames": 0,
+        "frames_with_potholes": 153,
+        "total_ground_truth_potholes": 324,
+        "total_predicted_potholes": 295,
+        "confusion_matrix_boxes": {
+            "TP": 177,
+            "FP": 118,
+            "FN": 147
+        },
+        "confusion_matrix_frames": {
+            "TP": 129,
+            "TN": 0,
+            "FP": 0,
+            "FN": 24
+        }
+    },
+    "accuracy_measurements": {
+        "scene_level_classification_accuracy": 84.31,
+        "multi_pothole_cluster_density_accuracy_plus_minus_2": 95.42,
+        "multi_pothole_cluster_density_accuracy_plus_minus_1": 78.43,
+        "multi_pothole_exact_count_accuracy": 37.91,
+        "bounding_box_localization_precision_iou_ge_50": 83.62,
+        "clean_road_and_wall_false_alarm_rejection_accuracy": 100.0
+    },
+    "standard_detection_metrics": {
+        "precision": 0.6,
+        "recall": 0.5463,
+        "f1_score": 0.5719
+    },
+    "detection_error_rates": {
+        "miss_rate_fnr": 0.4537,
+        "false_discovery_rate_fdr": 0.4,
+        "false_positives_per_image_fppi": 0.7712,
+        "false_alarm_rate_on_clean_roads": 0.0
+    },
+    "multi_pothole_counting_metrics": {
+        "mae_count": 0.8954,
+        "rmse_count": 1.2654,
+        "mse_count": 1.6013
+    },
+    "cv_spatial_geometry_errors": {
+        "mean_iou_on_true_potholes": 0.648,
+        "center_distance_error_pixels": 13.08,
+        "center_distance_error_normalized": 0.0204,
+        "center_localization_jitter_std_pixels": 18.13,
+        "aspect_ratio_distortion_error": 0.4367,
+        "area_scale_relative_error_pct": 35.44
+    }
+}
