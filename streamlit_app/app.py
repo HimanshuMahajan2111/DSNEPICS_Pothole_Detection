@@ -1137,3 +1137,14 @@ with tab5:
                     {"Severity Level": "Critical Hazard (Tier 3)", "Max Depth Constraint": "≥ 5.0 cm", "Max Area": "> 0.5 m²", "SLA Repair Window": "Emergency 24 Hours", "Vehicle Impact": "Rim Damage / Blowout Risk"}
                 ])
                 st.table(df_standards)
+
+# ── AUTO-BOOTSTRAP RUNNER (ALLOWS RUNNING `python app.py` DIRECTLY) ──
+if __name__ == "__main__":
+    from streamlit.runtime.scriptrunner import get_script_run_ctx
+    if get_script_run_ctx() is None:
+        import sys
+        from streamlit.web import cli as stcli
+        print("⚡ Bootstrapping Streamlit Web Server on http://localhost:8501 ...")
+        sys.argv = ["streamlit", "run", str(Path(__file__).resolve()), "--server.port=8501"]
+        sys.exit(stcli.main())
+
