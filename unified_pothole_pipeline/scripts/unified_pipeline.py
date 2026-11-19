@@ -325,28 +325,46 @@ class UnifiedPotholePipeline:
             volume_cm3 = 0.5 * area_cm2 * fused_depth_cm
             volume_litres = volume_cm3 / 1000.0
             
-            # ── 3D Reconstruction Profile (Exact Fracture Bathymetry) ──
-            mask_h, mask_w = seg_mask.shape[:2]
-            dist_map = cv2.distanceTransform(seg_mask, cv2.DIST_L2, 5)
+            # ── 3D Reconstruction Profile (Exact Fracture Bathymetry with Pavement Bed) ──
+            pad_x = int(w_box * 0.25)
+            pad_y = int(h_box * 0.25)
+            x1_p, y1_p = max(0, x1 - pad_x), max(0, y1 - pad_y)
+            x2_p, y2_p = min(im_w, x2 + pad_x), min(im_h, y2 + pad_y)
+            crop_padded_bgr = img_bgr[y1_p:y2_p, x1_p:x2_p]
+            crop_padded_rgb = img_rgb[y1_p:y2_p, x1_p:x2_p]
+            pad_h_px, pad_w_px = crop_padded_bgr.shape[:2]
+            
+            padded_mask = np.zeros((pad_h_px, pad_w_px), dtype=np.uint8)
+            padded_mask[y1 - y1_p : y2 - y1_p, x1 - x1_p : x2 - x1_p] = seg_mask
+            
+            phys_w_pad_cm = phys_w_cm * (pad_w_px / float(w_box))
+            phys_l_pad_cm = phys_l_cm * (pad_h_px / float(h_box))
+            
+            dist_map = cv2.distanceTransform(padded_mask, cv2.DIST_L2, 5)
             max_d = np.max(dist_map)
             dist_norm = dist_map / (max_d + 1e-6) if max_d > 0 else np.zeros_like(dist_map, dtype=np.float32)
             
-            # Texture modulation inside cavity
-            gray_norm = 1.0 - (gray_crop - np.min(gray_crop)) / (np.ptp(gray_crop) + 1e-6)
-            cavity_depth_profile = (dist_norm ** 0.70) * (0.80 + 0.20 * gray_norm)
-            cavity_depth_profile[seg_mask == 0] = 0.0
+            # Realistic asphalt shear failure: 45% depth drop at fracture rim + aggregate roughness
+            cliff_drop = np.where(dist_norm > 0, 0.45 + 0.55 * (dist_norm ** 0.40), 0.0)
+            gray_padded = cv2.cvtColor(crop_padded_bgr, cv2.COLOR_BGR2GRAY).astype(np.float32)
+            blur_padded = cv2.GaussianBlur(gray_padded, (7, 7), 0)
+            texture_hp = (gray_padded - blur_padded) / 255.0
+            rock_roughness = (1.0 - (gray_padded / 255.0)) * 0.4 + texture_hp * 0.6
+            
+            cavity_depth_profile = cliff_drop * (1.0 + 0.30 * rock_roughness)
+            cavity_depth_profile[padded_mask == 0] = 0.0
             
             depth_map_cm = fused_depth_cm * cavity_depth_profile
-            depth_map_cm = gaussian_filter(depth_map_cm, sigma=0.8)
+            depth_map_cm = gaussian_filter(depth_map_cm, sigma=0.6)
             
-            x_cm = np.linspace(-phys_w_cm / 2.0, phys_w_cm / 2.0, mask_w)
-            y_cm = np.linspace(-phys_l_cm / 2.0, phys_l_cm / 2.0, mask_h)
+            x_cm = np.linspace(-phys_w_pad_cm / 2.0, phys_w_pad_cm / 2.0, pad_w_px)
+            y_cm = np.linspace(-phys_l_pad_cm / 2.0, phys_l_pad_cm / 2.0, pad_h_px)
             x_metric, y_metric = np.meshgrid(x_cm, y_cm)
             z_elevation_metric = -depth_map_cm
             
             # Export PLY point cloud
             ply_path = os.path.join(self.outputs_dir, f"{output_prefix}_pothole_{p_idx+1}.ply")
-            self.export_ply(ply_path, x_metric, y_metric, z_elevation_metric, colors=crop_rgb)
+            self.export_ply(ply_path, x_metric, y_metric, z_elevation_metric, colors=crop_padded_rgb)
             
             # ── 6-PANEL UNIFIED MASTER DIAGNOSTIC DASHBOARD ──
             fig = plt.figure(figsize=(20, 12), dpi=150)
