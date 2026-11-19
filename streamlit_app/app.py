@@ -431,6 +431,139 @@ with tab1:
         </div>
         """, unsafe_allow_html=True)
 
+        # ── CIVIL & STRUCTURAL OUTPUT CONSTRAINTS AUDIT PANEL ──
+        with st.container(border=True):
+            st.markdown("""
+            <div class="panel-header">
+                <span class="panel-title">⚖️ CIVIL ENGINEERING & VEHICLE SAFETY OUTPUT CONSTRAINTS AUDIT</span>
+                <span class="tactical-badge badge-yellow">IRC:82-2015 & ASTM D6433 STANDARDS</span>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Constraint Calculations
+            # 1. IRC:82 Depth Limits & SLA
+            if d_cm >= 5.0:
+                irc_tag = "CRITICAL BREACH // 24-HR SLA"
+                irc_class = "constraint-status-breach"
+                irc_desc = f"Exceeds the 5.0 cm emergency safety limit by <b>+{d_cm - 5.0:.2f} cm</b>. Immediate hazard to vehicular traffic."
+                layer_breach = "Base Course / Subgrade Intrusion (Structural Degradation)"
+            elif d_cm >= 2.5:
+                irc_tag = "ELEVATED SEVERITY // 72-HR SLA"
+                irc_class = "constraint-status-warning"
+                irc_desc = f"Exceeds the 2.5 cm routine threshold by <b>+{d_cm - 2.5:.2f} cm</b> (Margin to 5cm critical limit: {5.0 - d_cm:.2f} cm)."
+                layer_breach = "Binder Course Delamination"
+            else:
+                irc_tag = "COMPLIANT // ROUTINE MONITORING"
+                irc_class = "constraint-status-safe"
+                irc_desc = f"Within standard allowable limits ({d_cm:.2f} cm < 2.5 cm threshold)."
+                layer_breach = "Wearing Surface Raveling Only"
+                
+            # 2. Suspension Travel Consumption (ISO 2631 Dynamic Comfort / Bottoming Limit 7.5 cm)
+            dyn_stroke_cm = min(7.5, d_cm * ((speed_kmh / 40.0)**0.42))
+            susp_travel_pct = min(1.0, dyn_stroke_cm / 7.5)
+            if susp_travel_pct >= 0.85:
+                susp_tag = "BOTTOMING-OUT HAZARD"
+                susp_class = "constraint-status-breach"
+            elif susp_travel_pct >= 0.55:
+                susp_tag = "MODERATE SUSPENSION WEAR"
+                susp_class = "constraint-status-warning"
+            else:
+                susp_tag = "SAFE DEFLECTION RANGE"
+                susp_class = "constraint-status-safe"
+                
+            # 3. Mandatory Step Box-Cut Repair Constraints (IRC:82 Section 8.3)
+            # Box-cut rectangle extended by +15 cm on each dimension for clean compaction seal
+            w_box_cut = w_cm + 15.0
+            l_box_cut = l_cm + 15.0
+            d_box_cut = max(d_cm + 1.0, 4.0)
+            box_vol_l = (w_box_cut * l_box_cut * d_box_cut) / 1000.0
+            gross_asphalt_kg = box_vol_l * 2.35 * 1.18 # 2.35 kg/L compacted density + 18% compaction allowance
+            bags_25kg = int(np.ceil(gross_asphalt_kg / 25.0))
+            tack_coat_area_m2 = (w_box_cut * l_box_cut / 10000.0) + (2.0 * (w_box_cut + l_box_cut) * d_box_cut / 10000.0)
+            tack_coat_kg = tack_coat_area_m2 * 0.30
+            
+            # 4. Safe Speed Ceiling Constraint
+            safe_speed_kmh = max(15.0, min(80.0, 40.0 * (4.2 / max(d_cm, 1.0))))
+            speed_delta = speed_kmh - safe_speed_kmh
+            if speed_delta > 10.0:
+                speed_risk_tag = "HIGH BLOWOUT RISK"
+                speed_risk_class = "constraint-status-breach"
+            elif speed_delta > 0.0:
+                speed_risk_tag = "MODERATE RIM IMPACT RISK"
+                speed_risk_class = "constraint-status-warning"
+            else:
+                speed_risk_tag = "SPEED BELOW RISK THRESHOLD"
+                speed_risk_class = "constraint-status-safe"
+
+            # 4 High-Density Constraint Cards (2x2 Grid)
+            row_c1, row_c2 = st.columns(2)
+            with row_c1:
+                st.markdown(f"""
+                <div class="constraint-card">
+                    <div class="constraint-card-header">
+                        <span class="constraint-title">🏛️ IRC:82 CIVIL DEPTH & SLA TOLERANCE</span>
+                        <span class="{irc_class}">{irc_tag}</span>
+                    </div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #0d0d0d; line-height: 1.6;">
+                        • <b>Measured Fused Depth</b>: <span style="font-size: 1.05rem; font-weight: 900; color: #ff5500;">{d_cm:.2f} cm</span><br>
+                        • <b>IRC Emergency Limit</b>: 5.00 cm | <b>Routine Threshold</b>: 2.50 cm<br>
+                        • <b>Pavement Layer Affected</b>: {layer_breach}<br>
+                        • <b>Compliance Status</b>: {irc_desc}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                st.progress(min(1.0, d_cm / 8.0))
+                st.caption(f"Depth Constraint Gauge: {d_cm:.2f} cm / 8.00 cm max scale")
+                
+                st.markdown(f"""
+                <div class="constraint-card" style="margin-top: 14px;">
+                    <div class="constraint-card-header">
+                        <span class="constraint-title">🧱 MANDATORY BOX-CUT REPAIR SPECIFICATION</span>
+                        <span class="tactical-badge badge-cyan">IRC STEP-CUT</span>
+                    </div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #0d0d0d; line-height: 1.6;">
+                        • <b>Minimum Rectangular Cut</b>: <b>{w_box_cut:.1f} cm</b> (W) × <b>{l_box_cut:.1f} cm</b> (L) × <b>{d_box_cut:.1f} cm</b> (D)<br>
+                        • <b>Excavation Volume (Boxed)</b>: {box_vol_l:.2f} Litres (Cavity Net: {v_litres:.2f} L)<br>
+                        • <b>Compacted Asphalt Cold-Mix</b>: <b>{gross_asphalt_kg:.1f} kg</b> (including +18% compaction allowance)<br>
+                        • <b>Standard 25kg Patch Bags</b>: <b style="font-size: 1.05rem; color: #050505;">{bags_25kg} BAGS</b><br>
+                        • <b>Bitumen Tack Coat Emulsion</b>: {tack_coat_kg:.2f} kg ({tack_coat_area_m2:.2f} m² surface + vertical wall seal)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with row_c2:
+                st.markdown(f"""
+                <div class="constraint-card">
+                    <div class="constraint-card-header">
+                        <span class="constraint-title">🚗 CHASSIS SUSPENSION DEFLECTION CONSTRAINT</span>
+                        <span class="{susp_class}">{susp_tag}</span>
+                    </div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #0d0d0d; line-height: 1.6;">
+                        • <b>Permissible Travel Stroke</b>: 7.50 cm (Bump-stop limit)<br>
+                        • <b>Dynamic Deflection</b>: <b>{dyn_stroke_cm:.2f} cm</b> at {speed_kmh:.1f} km/h<br>
+                        • <b>Stroke Travel Consumed</b>: <b>{susp_travel_pct*100:.1f}%</b> of allowable travel<br>
+                        • <b>Absorbed Kinetic Energy</b>: {shock_j:.1f} Joules | <b>Shock PtP</b>: {ptp_shock:.2f}g
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                st.progress(susp_travel_pct)
+                st.caption(f"Suspension Stroke Travel: {dyn_stroke_cm:.2f} cm / 7.50 cm limit ({susp_travel_pct*100:.1f}%)")
+                
+                st.markdown(f"""
+                <div class="constraint-card" style="margin-top: 14px;">
+                    <div class="constraint-card-header">
+                        <span class="constraint-title">⚡ TIRE RIM SAFETY & SPEED CEILING</span>
+                        <span class="{speed_risk_class}">{speed_risk_tag}</span>
+                    </div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #0d0d0d; line-height: 1.6;">
+                        • <b>Current Approach Speed</b>: {speed_kmh:.1f} km/h ({speed_mps:.1f} m/s)<br>
+                        • <b>Recommended Safe Speed Ceiling</b>: <b style="font-size: 1.05rem; color: #ff5500;">{safe_speed_kmh:.1f} km/h</b><br>
+                        • <b>Speed Differential</b>: {speed_delta:+.1f} km/h relative to safe threshold<br>
+                        • <b>Tire Blowout Risk Index</b>: {min(100.0, max(5.0, (speed_kmh/safe_speed_kmh)*50.0)):.1f} / 100
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
         # 6-Panel Diagnostic Dashboard Display
         dash_img = cur_pothole["artifacts"].get("dashboard_png")
         if dash_img and Path(dash_img).exists():
@@ -697,6 +830,21 @@ with tab2:
                         paper_bgcolor="#ffffff", plot_bgcolor="#faf9f6"
                     )
                     st.plotly_chart(fig_y_cut, width="stretch")
+
+                # ── PAVEMENT LAYER STRUCTURAL INTRUSION & MILLING CONSTRAINTS ──
+                st.markdown("---")
+                st.markdown("#### 🏛️ PAVEMENT STRUCTURAL LAYER INTRUSION & MILLING CONSTRAINTS")
+                layer_depth = d_val
+                wear_int = min(3.0, layer_depth)
+                binder_int = max(0.0, min(3.0, layer_depth - 3.0))
+                sub_int = max(0.0, layer_depth - 6.0)
+                
+                df_layers = pd.DataFrame([
+                    {"Pavement Layer": "Asphalt Wearing Course (Bituminous Concrete)", "Standard Thickness": "0.0 - 3.0 cm", "Cavity Intrusion": f"{wear_int:.2f} cm (100% Breached)" if wear_int >= 3.0 else f"{wear_int:.2f} cm (Partial)", "Mandatory Action": "Full Surface Milling & Cold-Mix Patch"},
+                    {"Pavement Layer": "Dense Bituminous Macadam (Binder Course)", "Standard Thickness": "3.0 - 6.0 cm", "Cavity Intrusion": f"{binder_int:.2f} cm ({binder_int/3.0*100:.0f}%)" if binder_int > 0 else "0.00 cm (Intact)", "Mandatory Action": "Tack Coat & Structural Binder Patch" if binder_int > 0 else "None (Protected)"},
+                    {"Pavement Layer": "Granular Wet Mix Macadam (Base / Subgrade)", "Standard Thickness": "> 6.0 cm", "Cavity Intrusion": f"{sub_int:.2f} cm (Compromised)" if sub_int > 0 else "0.00 cm (Intact)", "Mandatory Action": "Subgrade Stone Infill & Compaction" if sub_int > 0 else "None (Protected)"}
+                ])
+                st.table(df_layers)
 
         else: # 🌐 ALL N DETECTED POTHOLES GALLERY
             st.markdown(f"### 🌐 SIMULTANEOUS 3D BATHYMETRY FOR ALL {num_potholes} DETECTED POTHOLE(S)")
@@ -980,3 +1128,12 @@ with tab5:
                     columns=["Pred Tier 1", "Pred Tier 2", "Pred Tier 3"]
                 )
                 st.table(df_cm)
+                
+                st.markdown("---")
+                st.markdown("##### 📜 IRC:82-2015 & ASTM D6433 REGULATORY MAINTENANCE CONSTRAINTS MATRIX")
+                df_standards = pd.DataFrame([
+                    {"Severity Level": "Low (Tier 1)", "Max Depth Constraint": "< 2.5 cm", "Max Area": "< 0.1 m²", "SLA Repair Window": "Routine 30-Day Cycle", "Vehicle Impact": "Vibration Only"},
+                    {"Severity Level": "Moderate (Tier 2)", "Max Depth Constraint": "2.5 - 5.0 cm", "Max Area": "0.1 - 0.5 m²", "SLA Repair Window": "72 Hours SLA", "Vehicle Impact": "Chassis Shock / Wear"},
+                    {"Severity Level": "Critical Hazard (Tier 3)", "Max Depth Constraint": "≥ 5.0 cm", "Max Area": "> 0.5 m²", "SLA Repair Window": "Emergency 24 Hours", "Vehicle Impact": "Rim Damage / Blowout Risk"}
+                ])
+                st.table(df_standards)
