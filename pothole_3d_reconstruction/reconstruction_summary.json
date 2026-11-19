@@ -1,0 +1,332 @@
+[
+    {
+        "sample_id": 0,
+        "source_image": "India_000027.jpg",
+        "ground_distance_m": 3.31,
+        "physical_dimensions": {
+            "width_cm": 72.21,
+            "length_cm": 32.88,
+            "max_depth_cm": 3.18,
+            "mean_depth_cm": 1.78,
+            "area_cm2": 1864.85,
+            "volume_cm3": 2967.53,
+            "volume_litres": 2.968
+        },
+        "severity_assessment": {
+            "tier_code": 1,
+            "tier_label": "Tier 1: Minor Routine"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00000.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00000.ply"
+        }
+    },
+    {
+        "sample_id": 1,
+        "source_image": "India_000027.jpg",
+        "ground_distance_m": 4.38,
+        "physical_dimensions": {
+            "width_cm": 68.14,
+            "length_cm": 31.52,
+            "max_depth_cm": 3.08,
+            "mean_depth_cm": 1.7,
+            "area_cm2": 1686.8,
+            "volume_cm3": 2599.41,
+            "volume_litres": 2.599
+        },
+        "severity_assessment": {
+            "tier_code": 1,
+            "tier_label": "Tier 1: Minor Routine"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00001.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00001.ply"
+        }
+    },
+    {
+        "sample_id": 6,
+        "source_image": "India_000043.jpg",
+        "ground_distance_m": 4.28,
+        "physical_dimensions": {
+            "width_cm": 54.88,
+            "length_cm": 24.12,
+            "max_depth_cm": 2.79,
+            "mean_depth_cm": 1.53,
+            "area_cm2": 1039.53,
+            "volume_cm3": 1452.48,
+            "volume_litres": 1.452
+        },
+        "severity_assessment": {
+            "tier_code": 1,
+            "tier_label": "Tier 1: Minor Routine"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00006.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00006.ply"
+        }
+    },
+    {
+        "sample_id": 7,
+        "source_image": "India_000043.jpg",
+        "ground_distance_m": 3.54,
+        "physical_dimensions": {
+            "width_cm": 47.46,
+            "length_cm": 22.7,
+            "max_depth_cm": 2.55,
+            "mean_depth_cm": 1.41,
+            "area_cm2": 846.02,
+            "volume_cm3": 1080.74,
+            "volume_litres": 1.081
+        },
+        "severity_assessment": {
+            "tier_code": 1,
+            "tier_label": "Tier 1: Minor Routine"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00007.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00007.ply"
+        }
+    },
+    {
+        "sample_id": 10,
+        "source_image": "India_000043.jpg",
+        "ground_distance_m": 6.04,
+        "physical_dimensions": {
+            "width_cm": 58.74,
+            "length_cm": 35.24,
+            "max_depth_cm": 2.72,
+            "mean_depth_cm": 1.58,
+            "area_cm2": 1625.99,
+            "volume_cm3": 2208.37,
+            "volume_litres": 2.208
+        },
+        "severity_assessment": {
+            "tier_code": 1,
+            "tier_label": "Tier 1: Minor Routine"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00010.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00010.ply"
+        }
+    },
+    {
+        "sample_id": 15,
+        "source_image": "India_000061.jpg",
+        "ground_distance_m": 4.96,
+        "physical_dimensions": {
+            "width_cm": 61.72,
+            "length_cm": 37.61,
+            "max_depth_cm": 2.78,
+            "mean_depth_cm": 1.6,
+            "area_cm2": 1823.44,
+            "volume_cm3": 2530.82,
+            "volume_litres": 2.531
+        },
+        "severity_assessment": {
+            "tier_code": 1,
+            "tier_label": "Tier 1: Minor Routine"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00015.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00015.ply"
+        }
+    },
+    {
+        "sample_id": 2,
+        "source_image": "India_000027.jpg",
+        "ground_distance_m": 4.88,
+        "physical_dimensions": {
+            "width_cm": 103.41,
+            "length_cm": 73.05,
+            "max_depth_cm": 3.49,
+            "mean_depth_cm": 1.97,
+            "area_cm2": 5933.6,
+            "volume_cm3": 10349.45,
+            "volume_litres": 10.349
+        },
+        "severity_assessment": {
+            "tier_code": 2,
+            "tier_label": "Tier 2: Moderate Priority"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00002.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00002.ply"
+        }
+    },
+    {
+        "sample_id": 3,
+        "source_image": "India_000027.jpg",
+        "ground_distance_m": 2.62,
+        "physical_dimensions": {
+            "width_cm": 85.1,
+            "length_cm": 44.33,
+            "max_depth_cm": 3.36,
+            "mean_depth_cm": 1.9,
+            "area_cm2": 2963.3,
+            "volume_cm3": 4983.18,
+            "volume_litres": 4.983
+        },
+        "severity_assessment": {
+            "tier_code": 2,
+            "tier_label": "Tier 2: Moderate Priority"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00003.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00003.ply"
+        }
+    },
+    {
+        "sample_id": 4,
+        "source_image": "India_000027.jpg",
+        "ground_distance_m": 4.77,
+        "physical_dimensions": {
+            "width_cm": 74.29,
+            "length_cm": 34.36,
+            "max_depth_cm": 3.22,
+            "mean_depth_cm": 1.84,
+            "area_cm2": 2004.76,
+            "volume_cm3": 3225.71,
+            "volume_litres": 3.226
+        },
+        "severity_assessment": {
+            "tier_code": 2,
+            "tier_label": "Tier 2: Moderate Priority"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00004.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00004.ply"
+        }
+    },
+    {
+        "sample_id": 5,
+        "source_image": "India_000043.jpg",
+        "ground_distance_m": 4.68,
+        "physical_dimensions": {
+            "width_cm": 143.67,
+            "length_cm": 37.28,
+            "max_depth_cm": 5.02,
+            "mean_depth_cm": 2.83,
+            "area_cm2": 4206.98,
+            "volume_cm3": 10567.08,
+            "volume_litres": 10.567
+        },
+        "severity_assessment": {
+            "tier_code": 2,
+            "tier_label": "Tier 2: Moderate Priority"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00005.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00005.ply"
+        }
+    },
+    {
+        "sample_id": 8,
+        "source_image": "India_000043.jpg",
+        "ground_distance_m": 5.23,
+        "physical_dimensions": {
+            "width_cm": 82.43,
+            "length_cm": 36.64,
+            "max_depth_cm": 3.42,
+            "mean_depth_cm": 1.88,
+            "area_cm2": 2372.06,
+            "volume_cm3": 4052.62,
+            "volume_litres": 4.053
+        },
+        "severity_assessment": {
+            "tier_code": 2,
+            "tier_label": "Tier 2: Moderate Priority"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00008.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00008.ply"
+        }
+    },
+    {
+        "sample_id": 9,
+        "source_image": "India_000043.jpg",
+        "ground_distance_m": 5.33,
+        "physical_dimensions": {
+            "width_cm": 107.72,
+            "length_cm": 70.43,
+            "max_depth_cm": 3.62,
+            "mean_depth_cm": 2.0,
+            "area_cm2": 5958.84,
+            "volume_cm3": 10772.98,
+            "volume_litres": 10.773
+        },
+        "severity_assessment": {
+            "tier_code": 2,
+            "tier_label": "Tier 2: Moderate Priority"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00009.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00009.ply"
+        }
+    },
+    {
+        "sample_id": 292,
+        "source_image": "India_001234.jpg",
+        "ground_distance_m": 7.93,
+        "physical_dimensions": {
+            "width_cm": 246.76,
+            "length_cm": 57.06,
+            "max_depth_cm": 6.74,
+            "mean_depth_cm": 3.68,
+            "area_cm2": 11059.24,
+            "volume_cm3": 37253.44,
+            "volume_litres": 37.253
+        },
+        "severity_assessment": {
+            "tier_code": 3,
+            "tier_label": "Tier 3: Critical Hazard"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00292.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00292.ply"
+        }
+    },
+    {
+        "sample_id": 532,
+        "source_image": "India_002066.jpg",
+        "ground_distance_m": 3.05,
+        "physical_dimensions": {
+            "width_cm": 234.58,
+            "length_cm": 46.8,
+            "max_depth_cm": 6.77,
+            "mean_depth_cm": 3.87,
+            "area_cm2": 8621.86,
+            "volume_cm3": 29166.19,
+            "volume_litres": 29.166
+        },
+        "severity_assessment": {
+            "tier_code": 3,
+            "tier_label": "Tier 3: Critical Hazard"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00532.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00532.ply"
+        }
+    },
+    {
+        "sample_id": 555,
+        "source_image": "India_002122.jpg",
+        "ground_distance_m": 2.89,
+        "physical_dimensions": {
+            "width_cm": 279.29,
+            "length_cm": 94.97,
+            "max_depth_cm": 6.64,
+            "mean_depth_cm": 3.76,
+            "area_cm2": 20831.56,
+            "volume_cm3": 69113.24,
+            "volume_litres": 69.113
+        },
+        "severity_assessment": {
+            "tier_code": 3,
+            "tier_label": "Tier 3: Critical Hazard"
+        },
+        "files": {
+            "visualization_png": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\outputs\\reconstruction_3d_sample_00555.png",
+            "point_cloud_ply": "d:\\DSN3099-EPICS\\Implementation\\pothole_3d_reconstruction\\point_clouds\\pothole_3d_sample_00555.ply"
+        }
+    }
+]

@@ -1,0 +1,151 @@
+{
+    "model_description": {
+        "architecture": "MiDaS DPT-Hybrid \u2192 GradientBoostedRegressor calibration head",
+        "depth_backbone": "Intel MiDaS DPT-Hybrid (trained on 12 real RGB-D datasets)",
+        "calibration_model": "GradientBoostingRegressor (500 trees, max_depth=5)",
+        "classifier": "GradientBoostingClassifier (300 trees, class-weight balanced)",
+        "training_method": "5-fold stratified cross-validation, 2\u00d7 noise augmentation"
+    },
+    "dataset_statistics": {
+        "total_samples": 2837,
+        "tier_distribution": {
+            "Tier_1": 1583,
+            "Tier_2": 1233,
+            "Tier_3": 21
+        },
+        "depth_range_cm": "1.20 \u2013 7.33",
+        "depth_mean_cm": 3.22
+    },
+    "cross_validated_depth_metrics": {
+        "depth_mae_cm": 0.0252,
+        "depth_rmse_cm": 0.0403,
+        "depth_r2": 0.999,
+        "abs_rel_error": 0.0083,
+        "sq_rel_error": 0.0004,
+        "silog": 1.24,
+        "delta_lt_1_25_pct": 100.0,
+        "delta_lt_1_56_pct": 100.0,
+        "delta_lt_1_95_pct": 100.0,
+        "tier_classification_accuracy_pct": 98.48
+    },
+    "cross_validated_tier_classification": {
+        "accuracy_pct": 98.48,
+        "note": "These are out-of-fold predictions \u2014 the model never trained on these samples."
+    },
+    "train_set_tier_classification": {
+        "accuracy_pct": 100.0,
+        "macro_precision": 1.0,
+        "macro_recall": 1.0,
+        "macro_f1": 1.0,
+        "weighted_precision": 1.0,
+        "weighted_recall": 1.0,
+        "weighted_f1": 1.0,
+        "per_class": {
+            "Tier_1_Minor": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1_score": 1.0,
+                "support": 1583
+            },
+            "Tier_2_Moderate": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1_score": 1.0,
+                "support": 1233
+            },
+            "Tier_3_Critical": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1_score": 1.0,
+                "support": 21
+            }
+        },
+        "confusion_matrix_rows_gt_cols_pred": [
+            [
+                1583,
+                0,
+                0
+            ],
+            [
+                0,
+                1233,
+                0
+            ],
+            [
+                0,
+                0,
+                21
+            ]
+        ]
+    },
+    "dimension_metrics": {
+        "width_mae_cm": 0.0,
+        "width_mape_pct": 0.0,
+        "length_mae_cm": 0.0,
+        "length_mape_pct": 0.0,
+        "note": "Width/length from frustum projection are identical to reference (same formula), so these only measure geometric self-consistency."
+    },
+    "overfitting_analysis": {
+        "overfitting_risk_level": "LOW",
+        "fold_mae_mean_cm": 0.0252,
+        "fold_mae_std_cm": 0.0009,
+        "fold_mae_cv_pct": 3.56,
+        "fold_mae_95_ci": "\u00b10.0011 cm",
+        "fold_delta_125_mean_pct": 100.0,
+        "fold_delta_125_std_pct": 0.0,
+        "fold_tier_acc_mean_pct": 98.48,
+        "fold_tier_acc_std_pct": 0.47,
+        "interpretation": "MAE varies by CV=3.6% across folds. Stable results suggest good generalisation.",
+        "train_vs_cv_mae_gap_cm": 0.0124,
+        "train_vs_cv_tier_gap_pct": 1.52
+    },
+    "feature_importances": [
+        {
+            "feature": "phys_width_cm_geo",
+            "importance": 0.7172
+        },
+        {
+            "feature": "bbox_area_m2",
+            "importance": 0.1959
+        },
+        {
+            "feature": "aspect_ratio",
+            "importance": 0.0697
+        },
+        {
+            "feature": "norm_w",
+            "importance": 0.0088
+        },
+        {
+            "feature": "phys_length_cm_geo",
+            "importance": 0.0048
+        },
+        {
+            "feature": "cy_minus_horizon",
+            "importance": 0.0019
+        },
+        {
+            "feature": "norm_h",
+            "importance": 0.0007
+        },
+        {
+            "feature": "area_x_z",
+            "importance": 0.0004
+        },
+        {
+            "feature": "midas_range",
+            "importance": 0.0001
+        },
+        {
+            "feature": "norm_area",
+            "importance": 0.0001
+        }
+    ],
+    "transparency_notes": [
+        "Reference depth labels are FORMULA-DERIVED from bbox geometry + luminance. No real-world ruler/LiDAR ground truth is available.",
+        "MiDaS provides real relative depth trained on 12 RGB-D datasets (MegaDepth, KITTI, etc.), grounding estimates in real visual depth.",
+        "\u03b4<1.25 accuracy measures agreement between MiDaS-calibrated predictions and formula-derived references, NOT absolute real-world accuracy.",
+        "The most deployment-reliable metric is SEVERITY TIER classification \u2014 it determines maintenance action regardless of absolute cm accuracy.",
+        "To validate absolute depth, compare against 3-5 potholes measured with a ruler or depth gauge in the field."
+    ]
+}

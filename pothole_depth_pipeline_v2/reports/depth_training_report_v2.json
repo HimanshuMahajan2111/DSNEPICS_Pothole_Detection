@@ -1,0 +1,128 @@
+{
+    "model_type": "GradientBoostedRegressor + GradientBoostedClassifier",
+    "backbone": "MiDaS DPT-Hybrid (pre-trained on real RGB-D data)",
+    "training_method": "5-fold stratified cross-validation with noise augmentation",
+    "honest_note": "All reported metrics are OUT-OF-FOLD predictions \u2014 the model never saw these samples during training for each fold.",
+    "total_samples": 2837,
+    "num_features": 30,
+    "cv_folds": 5,
+    "per_fold_metrics": [
+        {
+            "fold": 1,
+            "mae_cm": 0.025780521469903027,
+            "rmse_cm": 0.039468599845854505,
+            "r2": 0.9990561892719905,
+            "delta_125_pct": 100.0,
+            "tier_accuracy_pct": 97.7112676056338
+        },
+        {
+            "fold": 2,
+            "mae_cm": 0.025494473641830127,
+            "rmse_cm": 0.04155304519269759,
+            "r2": 0.9988155339241992,
+            "delta_125_pct": 100.0,
+            "tier_accuracy_pct": 98.41549295774648
+        },
+        {
+            "fold": 3,
+            "mae_cm": 0.025467762872044466,
+            "rmse_cm": 0.036864866833326765,
+            "r2": 0.9991869245926717,
+            "delta_125_pct": 100.0,
+            "tier_accuracy_pct": 98.76543209876543
+        },
+        {
+            "fold": 4,
+            "mae_cm": 0.023372955803321927,
+            "rmse_cm": 0.03230986257975288,
+            "r2": 0.9993153910712493,
+            "delta_125_pct": 100.0,
+            "tier_accuracy_pct": 98.4126984126984
+        },
+        {
+            "fold": 5,
+            "mae_cm": 0.025641770668662685,
+            "rmse_cm": 0.04931911380742975,
+            "r2": 0.9984468743825528,
+            "delta_125_pct": 100.0,
+            "tier_accuracy_pct": 99.11816578483244
+        }
+    ],
+    "overall_cv_metrics": {
+        "depth_mae_cm": 0.0252,
+        "depth_rmse_cm": 0.0403,
+        "depth_r2": 0.999,
+        "abs_rel_error": 0.0083,
+        "sq_rel_error": 0.0004,
+        "silog": 1.24,
+        "delta_lt_1_25_pct": 100.0,
+        "delta_lt_1_56_pct": 100.0,
+        "delta_lt_1_95_pct": 100.0,
+        "tier_classification_accuracy_pct": 98.48
+    },
+    "confusion_matrix_tiers": [
+        [
+            1571,
+            12,
+            0
+        ],
+        [
+            19,
+            1209,
+            5
+        ],
+        [
+            0,
+            7,
+            14
+        ]
+    ],
+    "top_10_feature_importances": [
+        {
+            "feature": "phys_width_cm_geo",
+            "importance": 0.7172
+        },
+        {
+            "feature": "bbox_area_m2",
+            "importance": 0.1959
+        },
+        {
+            "feature": "aspect_ratio",
+            "importance": 0.0697
+        },
+        {
+            "feature": "norm_w",
+            "importance": 0.0088
+        },
+        {
+            "feature": "phys_length_cm_geo",
+            "importance": 0.0048
+        },
+        {
+            "feature": "cy_minus_horizon",
+            "importance": 0.0019
+        },
+        {
+            "feature": "norm_h",
+            "importance": 0.0007
+        },
+        {
+            "feature": "area_x_z",
+            "importance": 0.0004
+        },
+        {
+            "feature": "midas_range",
+            "importance": 0.0001
+        },
+        {
+            "feature": "norm_area",
+            "importance": 0.0001
+        }
+    ],
+    "caveats": [
+        "Reference depth labels are formula-derived (not LiDAR/ruler measured).",
+        "MiDaS provides real relative depth, but absolute metric calibration depends on camera geometry assumptions (H=1.25m, FOV=70\u00b0).",
+        "Tier classification accuracy is the most reliable metric for real-world road maintenance decisions.",
+        "\u03b4<1.25 is computed against formula-derived references, so it measures how well MiDaS + calibration reproduces the geometric model."
+    ]
+}

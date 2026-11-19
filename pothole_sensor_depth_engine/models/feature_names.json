@@ -1,0 +1,13 @@
+[
+    "qc_depth_cm",
+    "qc_width_cm",
+    "qc_energy_j",
+    "acc_ptp",
+    "acc_std",
+    "acc_rms",
+    "rms_jerk",
+    "max_jerk",
+    "speed_mps",
+    "prof_p95_cm",
+    "prof_std_cm"
+]

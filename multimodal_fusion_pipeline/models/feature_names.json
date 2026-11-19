@@ -1,0 +1,21 @@
+[
+    "img_norm_w",
+    "img_norm_h",
+    "img_norm_area",
+    "img_aspect_ratio",
+    "img_z_dist_m",
+    "img_midas_diff",
+    "img_midas_ratio",
+    "img_midas_cavity_mean",
+    "img_midas_datum_mean",
+    "seg_fill_ratio",
+    "seg_shadow_contrast",
+    "seg_circularity",
+    "seg_edge_density",
+    "sen_acc_ptp",
+    "sen_acc_rms",
+    "sen_rms_jerk",
+    "sen_speed_mps",
+    "sen_qc_depth_cm",
+    "sen_qc_energy_j"
+]

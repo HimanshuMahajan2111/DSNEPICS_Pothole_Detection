@@ -1,0 +1,88 @@
+{
+    "evaluation_protocol": "Strict 15% Holdout Test Split (Never touched during training)",
+    "dataset_metadata": {
+        "test_samples": 353,
+        "train_samples": 1645,
+        "features_utilized": 11,
+        "depth_range_cm": {
+            "min": 0.97,
+            "max": 9.2,
+            "mean": 4.18
+        }
+    },
+    "overfitting_gap_analysis": {
+        "train_mae_cm": 0.2845,
+        "test_mae_cm": 0.4307,
+        "mae_gap_cm": 0.1462,
+        "train_tier_accuracy_pct": 89.06,
+        "test_tier_accuracy_pct": 84.99,
+        "accuracy_gap_pct": 4.07,
+        "overfitting_verdict": "HEALTHY GENERALIZATION"
+    },
+    "regression_depth_metrics": {
+        "mean_absolute_error_mae_cm": 0.4307,
+        "median_absolute_error_cm": 0.3546,
+        "root_mean_squared_error_rmse_cm": 0.5356,
+        "mean_absolute_percentage_error_mape_pct": 13.13,
+        "coefficient_of_determination_r2": 0.916,
+        "pearson_correlation_coefficient_r": 0.9575,
+        "spearman_rank_correlation_rho": 0.9448
+    },
+    "depth_accuracy_threshold_benchmarks": {
+        "delta_less_than_1_10_strict_pct": 50.71,
+        "delta_less_than_1_25_standard_pct": 84.99,
+        "delta_less_than_1_56_relaxed_pct": 97.45
+    },
+    "relative_and_scale_invariant_errors": {
+        "absolute_relative_error_abs_rel": 0.1313,
+        "squared_relative_error_sq_rel": 0.0905,
+        "scale_invariant_logarithmic_error_silog": 17.3323
+    },
+    "severity_tier_classification_metrics": {
+        "overall_accuracy_pct": 84.99,
+        "balanced_accuracy_pct": 85.17,
+        "macro_precision": 0.8527,
+        "macro_recall": 0.8517,
+        "macro_f1_score": 0.852,
+        "weighted_f1_score": 0.8499,
+        "cohens_kappa_score": 0.7482,
+        "matthews_correlation_coefficient_mcc": 0.7486,
+        "confusion_matrix_3x3_rows_gt_cols_pred": [
+            [
+                109,
+                17,
+                0
+            ],
+            [
+                23,
+                151,
+                6
+            ],
+            [
+                0,
+                7,
+                40
+            ]
+        ],
+        "per_tier_metrics": {
+            "Tier 1: Minor": {
+                "precision": 0.8258,
+                "recall": 0.8651,
+                "f1_score": 0.845,
+                "sample_support": 126
+            },
+            "Tier 2: Moderate": {
+                "precision": 0.8629,
+                "recall": 0.8389,
+                "f1_score": 0.8507,
+                "sample_support": 180
+            },
+            "Tier 3: Critical": {
+                "precision": 0.8696,
+                "recall": 0.8511,
+                "f1_score": 0.8602,
+                "sample_support": 47
+            }
+        }
+    }
+}

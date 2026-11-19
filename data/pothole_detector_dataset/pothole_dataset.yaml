@@ -1,0 +1,8 @@
+# Dedicated Pothole Detection Dataset Configuration
+path: d:\DSN3099-EPICS\Implementation\data\pothole_detector_dataset
+train: images/train
+val: images/val
+test: images/test
+
+nc: 1
+names: ['pothole']
